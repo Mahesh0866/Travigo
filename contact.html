@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html class="light" lang="en" style=""><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Contact Us | Travigo</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Work+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-background": "#1e1a24",
+                    "surface-container-high": "#efe5f4",
+                    "secondary-fixed-dim": "#e6b5f9",
+                    "on-surface-variant": "#4d444f",
+                    "primary-fixed": "#f8d8ff",
+                    "on-secondary": "#ffffff",
+                    "outline-variant": "#d0c2d0",
+                    "on-primary-fixed-variant": "#652f7c",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed-dim": "#e3b6fa",
+                    "surface-dim": "#e0d7e5",
+                    "on-secondary-container": "#6f4681",
+                    "inverse-surface": "#342e39",
+                    "error-container": "#ffdad6",
+                    "surface": "#fff7ff",
+                    "error": "#ba1a1a",
+                    "on-error": "#ffffff",
+                    "surface-variant": "#e9dfee",
+                    "surface-container": "#f4eaf9",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed": "#f5d9ff",
+                    "primary": "#6d3684",
+                    "on-primary-fixed": "#320047",
+                    "primary-fixed-dim": "#ebb2ff",
+                    "on-secondary-fixed": "#2f0642",
+                    "secondary": "#784e8a",
+                    "on-tertiary-fixed": "#2d0743",
+                    "secondary-fixed": "#f7d8ff",
+                    "surface-container-highest": "#e9dfee",
+                    "surface-tint": "#7f4796",
+                    "surface-bright": "#fff7ff",
+                    "on-secondary-fixed-variant": "#5e3670",
+                    "on-tertiary-fixed-variant": "#5c3771",
+                    "primary-container": "#874f9e",
+                    "outline": "#7f7480",
+                    "on-error-container": "#93000a",
+                    "inverse-primary": "#ebb2ff",
+                    "tertiary-container": "#7d5693",
+                    "on-surface": "#1e1a24",
+                    "background": "#fff7ff",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-container": "#f6dbff",
+                    "on-primary-container": "#f9dbff",
+                    "tertiary": "#643e79",
+                    "surface-container-low": "#faf0ff",
+                    "inverse-on-surface": "#f7edfc",
+                    "secondary-container": "#ecbaff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1440px",
+                    "md": "16px",
+                    "xs": "4px",
+                    "margin-mobile": "16px",
+                    "unit": "4px",
+                    "gutter": "24px",
+                    "xl": "48px",
+                    "lg": "24px",
+                    "sm": "8px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Work Sans"],
+                    "label-md": ["Work Sans"],
+                    "headline-lg": ["Manrope"],
+                    "headline-md": ["Manrope"],
+                    "display-lg": ["Manrope"],
+                    "body-md": ["Work Sans"],
+                    "display-lg-mobile": ["Manrope"],
+                    "body-lg": ["Work Sans"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg-mobile": ["36px", {"lineHeight": "42px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .soft-ambient-shadow {
+            box-shadow: 0px 4px 20px rgba(94, 54, 112, 0.08);
+        }
+
+        .input-focus-ring:focus {
+            outline: none;
+            border-color: #874f9e;
+            box-shadow: 0 0 0 4px #f3e9f8;
+        }
+
+        .submit-success {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #side-drawer {
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden min-h-screen flex flex-col">
+<!-- Navigation Drawer Overlay -->
+<div class="fixed inset-0 bg-black/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300" id="drawer-overlay" onclick="toggleDrawer()"></div>
+<!-- Navigation Drawer -->
+<aside class="fixed top-0 right-0 h-full w-[280px] bg-surface z-[70] shadow-2xl translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto" id="nav-drawer">
+<div class="flex flex-col h-full p-lg">
+<div class="flex justify-between items-center mb-xl">
+<h2 class="font-headline-md text-primary">Menu</h2>
+<button aria-label="Close Menu" class="p-2 rounded-full hover:bg-surface-container transition-colors" onclick="toggleDrawer()">
+<span class="material-symbols-outlined text-on-surface">close</span>
+</button>
+</div>
+<nav class="flex flex-col gap-sm">
+<a class="flex items-center gap-md p-md rounded-xl hover:bg-primary/5 text-on-surface font-label-md transition-colors" href="index.html">
+<span class="material-symbols-outlined">home</span>
+Home
+</a>
+<a class="flex items-center gap-md p-md rounded-xl hover:bg-primary/5 text-on-surface font-label-md transition-colors" href="about.html">
+<span class="material-symbols-outlined">info</span>
+About Us
+</a>
+<a class="flex items-center gap-md p-md rounded-xl hover:bg-primary/5 text-on-surface font-label-md transition-colors" href="contact.html">
+<span class="material-symbols-outlined">mail</span>
+Contact Us
+</a>
+<a class="flex items-center gap-md p-md rounded-xl hover:bg-primary/5 text-on-surface font-label-md transition-colors" href="liked_places.html">
+<span class="material-symbols-outlined">favorite</span>
+Favourites
+</a>
+<a class="flex items-center gap-md p-md rounded-xl hover:bg-primary/5 text-on-surface font-label-md transition-colors" href="profile.html">
+<span class="material-symbols-outlined">person</span>
+Profile
+</a>
+<a class="mt-auto bg-primary text-on-primary p-md rounded-xl text-center font-label-md shadow-md active:scale-95 transition-transform" href="login.html">
+Login / Sign Up
+</a>
+</nav>
+<div class="mt-xl pt-xl border-t border-surface-container-high">
+<p class="text-on-surface-variant text-label-sm mb-md">Follow Us</p>
+<div class="flex gap-md text-primary font-bold">
+<span class="material-symbols-outlined cursor-pointer hover:opacity-70">public</span>
+<span class="material-symbols-outlined cursor-pointer hover:opacity-70">share</span>
+</div>
+</div>
+</div>
+</aside>
+
+<!-- TopAppBar -->
+
+<header class="bg-primary dark:bg-primary-container full-width top-0 sticky z-50 shadow-md transition-all duration-300" id="top-app-bar">
+<nav class="flex justify-between items-center px-lg py-md w-full max-w-container-max mx-auto transition-all duration-300">
+<div class="flex items-center gap-xl">
+<a class="font-display-lg text-display-lg font-bold text-on-primary whitespace-nowrap" href="index.html">Travigo</a>
+<!-- Desktop Nav Links -->
+<div class="hidden lg:flex items-center gap-lg desktop-nav-links">
+<a class="text-on-primary hover:text-on-primary/80 font-label-md transition-colors" href="index.html">Home</a>
+<a class="text-on-primary hover:text-on-primary/80 font-label-md transition-colors" href="about.html">About Us</a>
+<a class="text-on-primary hover:text-on-primary/80 font-label-md transition-colors" href="contact.html">Contact Us</a>
+<a class="text-on-primary hover:text-on-primary/80 font-label-md transition-colors" href="liked_places.html">Favourites</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<!-- Desktop Login / Profile -->
+<div class="hidden md:flex items-center gap-md">
+<a class="text-on-primary hover:bg-on-primary/10 px-md py-sm rounded-lg font-label-md transition-colors inline-flex items-center gap-xs" href="profile.html">
+<span class="material-symbols-outlined align-middle mr-xs">person</span>Profile
+</a>
+<a class="bg-on-primary text-primary px-lg py-sm rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-all shadow-sm" href="login.html">
+Login / Sign Up
+</a>
+</div>
+<!-- Hamburger Menu Button -->
+<button aria-label="Open Menu" class="flex items-center justify-center p-2 rounded-full hover:bg-on-primary/10 transition-colors lg:hidden" onclick="toggleDrawer()">
+<span class="material-symbols-outlined text-on-primary cursor-pointer text-[28px]">menu</span>
+</button>
+</div>
+</nav>
+</header>
+
+<!-- Side Drawer (Mobile only) -->
+
+<main class="w-full max-w-container-max mx-auto px-lg py-xl flex-grow">
+<!-- Hero Section -->
+<div class="mb-xl text-center">
+<h2 class="font-display-lg text-display-lg text-on-secondary-fixed-variant mb-md">Get in Touch</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+            Have questions about our local hidden gems? Whether you're planning a trip or sharing a new discovery, our team is here to help you navigate the best of the region.
+        </p>
+</div>
+<!-- Main Content: Two Column Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-xl">
+<!-- Contact Form Column -->
+<div class="lg:col-span-7 bg-white rounded-xl soft-ambient-shadow p-xl border border-surface-container h-fit">
+<form class="space-y-lg" id="contactForm">
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-secondary-fixed-variant block" for="email">Email Address</label>
+<input class="w-full bg-white border border-[#b98ecf] rounded-lg px-md py-sm font-body-md text-on-background input-focus-ring transition-all duration-200" id="email" placeholder="yourname@example.com" required="" type="email"/>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-secondary-fixed-variant block" for="subject">Subject</label>
+<input class="w-full bg-white border border-[#b98ecf] rounded-lg px-md py-sm font-body-md text-on-background input-focus-ring transition-all duration-200" id="subject" placeholder="How can we help?" required="" type="text"/>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-secondary-fixed-variant block" for="message">Message</label>
+<textarea class="w-full bg-white border border-[#b98ecf] rounded-lg px-md py-sm font-body-md text-on-background input-focus-ring transition-all duration-200 resize-none" id="message" placeholder="Tell us more about your inquiry..." required="" rows="6"></textarea>
+</div>
+<button class="w-full bg-[#874f9e] hover:bg-[#5e3670] text-white font-label-md text-label-md py-md rounded-lg transition-colors duration-200 shadow-md transform active:scale-95" type="submit">
+                    Send Message
+                </button>
+</form>
+<!-- Success Message -->
+<div class="hidden text-center py-xl submit-success" id="successMessage">
+<span class="material-symbols-outlined text-primary text-6xl mb-md">check_circle</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-xs">Message Sent!</h3>
+<p class="text-on-surface-variant">We'll get back to you within 24 hours.</p>
+<button class="mt-lg text-primary font-label-md hover:underline" onclick="resetForm()">Send another message</button>
+</div>
+</div>
+<!-- Map & Contact Info Column -->
+<div class="lg:col-span-5 flex flex-col gap-lg">
+<!-- Map Container -->
+<div class="relative w-full aspect-video rounded-xl overflow-hidden border-2 border-[#b98ecf] soft-ambient-shadow">
+<div class="absolute inset-0 bg-surface-container-high flex items-center justify-center">
+<div class="text-center p-md">
+<span class="material-symbols-outlined text-primary text-5xl mb-md">location_on</span>
+<p class="font-label-md text-label-md text-on-surface-variant">Interactive Map Loading...</p>
+</div>
+</div>
+<!-- Placeholder Map Image -->
+<div class="w-full h-full bg-cover bg-center" data-alt="Vector map illustration of a coastal city district" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB1VluSHX2uXY9HDSdXqZxDANuCAL4dnUjAYEB7QQOHbx9QOmZdQ5QRgEeDwLs_erRPoISd9l-dPyFPt3prGIeiGjiRjarfzw06kse2efWMruWPCJX_qWfXDels1Nl2c-ve9VvEAV_PvCL2Y_R3j1uuw618Gu-iIFiu31hiKFpd6qBw4JHJchjXhNBRLtRP_fmV0su2v8QfcklQedflojbbtdJ8jPCx6o-OPifcZNjBHBUrqbRIOhNSpOM_GTNVQM_qf8BIidyqVaQ')"></div>
+</div>
+<!-- Info Cards -->
+<div class="flex flex-col gap-md">
+<div class="p-lg bg-surface-container-low rounded-xl flex items-start gap-md border border-surface-container">
+<div class="bg-primary/10 p-sm rounded-lg">
+<span class="material-symbols-outlined text-primary">local_post_office</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-secondary-fixed-variant">Email Us</h4>
+<p class="text-body-md text-on-surface-variant">hello@travigo.com</p>
+</div>
+</div>
+<div class="p-lg bg-surface-container-low rounded-xl flex items-start gap-md border border-surface-container">
+<div class="bg-primary/10 p-sm rounded-lg">
+<span class="material-symbols-outlined text-primary">call</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-secondary-fixed-variant">Call Us</h4>
+<p class="text-body-md text-on-surface-variant">+1 (555) 012-3456</p>
+</div>
+</div>
+<div class="p-lg bg-surface-container-low rounded-xl flex items-start gap-md border border-surface-container">
+<div class="bg-primary/10 p-sm rounded-lg">
+<span class="material-symbols-outlined text-primary">schedule</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-secondary-fixed-variant">Support Hours</h4>
+<p class="text-body-md text-on-surface-variant">Mon-Fri: 9:00 AM - 6:00 PM EST</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer: 3-column Desktop Version -->
+<footer class="bg-on-secondary-fixed-variant dark:bg-inverse-surface mt-xl w-full">
+<div class="max-w-container-max mx-auto px-lg py-xl grid grid-cols-1 md:grid-cols-3 gap-xl">
+<div class="space-y-md">
+<h3 class="font-headline-md text-headline-md text-on-primary cursor-pointer" onclick="window.location.href='index.html'">Travigo</h3>
+<p class="font-body-md text-body-md text-on-primary/70">
+                Empowering travelers to find authentic regional experiences and support local businesses. Discover the heartbeat of every community.
+            </p>
+</div>
+<div class="flex flex-col gap-sm">
+<h4 class="font-label-md text-label-md text-on-primary mb-xs">Quick Links</h4>
+<div class="grid grid-cols-2 gap-y-2">
+<a class="font-label-sm text-label-sm text-on-primary/70 hover:text-on-primary transition-colors" href="index.html">Home</a>
+<a class="font-label-sm text-label-sm text-on-primary/70 hover:text-on-primary transition-colors" href="about.html">About Us</a>
+<a class="font-label-sm text-label-sm text-on-primary hover:text-on-primary transition-colors underline decoration-2 underline-offset-4" href="contact.html">Contact Us</a>
+<a class="font-label-sm text-label-sm text-on-primary/70 hover:text-on-primary transition-colors" href="liked_places.html">Liked Places</a>
+<a class="font-label-sm text-label-sm text-on-primary/70 hover:text-on-primary transition-colors" href="profile.html">Profile</a>
+<a class="font-label-sm text-label-sm text-on-primary/70 hover:text-on-primary transition-colors" href="#">FAQ</a>
+</div>
+</div>
+<div class="space-y-md">
+<h4 class="font-label-md text-label-md text-on-primary">Stay Updated</h4>
+<div class="flex gap-xs">
+<input class="bg-white/10 border border-white/20 rounded-lg px-md py-sm text-on-primary text-label-sm w-full focus:outline-none focus:border-on-primary transition-all" placeholder="Email address" type="email"/>
+<button class="bg-primary-container px-lg py-sm rounded-lg text-white text-label-sm font-bold hover:bg-primary transition-colors">Join</button>
+</div>
+<div class="flex gap-lg pt-xs">
+<span class="material-symbols-outlined text-on-primary/70 cursor-pointer hover:text-on-primary">face_nod</span>
+<span class="material-symbols-outlined text-on-primary/70 cursor-pointer hover:text-on-primary">share</span>
+<span class="material-symbols-outlined text-on-primary/70 cursor-pointer hover:text-on-primary">travel_explore</span>
+</div>
+</div>
+</div>
+<div class="border-t border-white/10 py-md text-center">
+<p class="font-label-sm text-label-sm text-on-primary/50">© 2024 Travigo. All rights reserved. Designed for exploration.</p>
+</div>
+</footer>
+
+<script id="navigation-root-scripts">// Page Specific Scripts
+
+    const contactForm = document.getElementById('contactForm');
+    const successMessage = document.getElementById('successMessage');
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            contactForm.classList.add('hidden');
+            successMessage.classList.remove('hidden');
+            console.log('Form Submitted:', {
+                email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value
+            });
+        });
+    }
+
+    window.resetForm = function() {
+        contactForm.reset();
+        contactForm.classList.remove('hidden');
+        successMessage.classList.add('hidden');
+    }
+    
+
+// Unified Navigation Drawer & Utilities
+
+    function toggleDrawer() {
+        const drawer = document.getElementById('nav-drawer');
+        const overlay = document.getElementById('drawer-overlay');
+        const body = document.body;
+        
+        if (drawer.classList.contains('translate-x-full')) {
+            drawer.classList.remove('translate-x-full');
+            overlay.classList.remove('opacity-0', 'pointer-events-none');
+            overlay.classList.add('opacity-100', 'pointer-events-auto');
+            body.style.overflow = 'hidden';
+        } else {
+            drawer.classList.add('translate-x-full');
+            overlay.classList.remove('opacity-100', 'pointer-events-auto');
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+            body.style.overflow = '';
+        }
+    }
+
+    // Scroll shrink header logic
+    window.addEventListener('scroll', () => {
+        const header = document.getElementById('top-app-bar');
+        const nav = header.querySelector('nav');
+        if (window.scrollY > 20) {
+            header.classList.add('bg-primary/95', 'backdrop-blur-md');
+            nav.classList.remove('py-md');
+            nav.classList.add('py-sm');
+        } else {
+            header.classList.remove('bg-primary/95', 'backdrop-blur-md');
+            nav.classList.remove('py-sm');
+            nav.classList.add('py-md');
+        }
+    });
+
+    // Set active link style based on current URL path
+    (function() {
+        let currentPath = window.location.pathname.split("/").pop();
+        if (!currentPath || currentPath === "/") {
+            currentPath = "index.html";
+        }
+        
+        // Active desktop links
+        const desktopLinks = document.querySelectorAll('.desktop-nav-links a');
+        desktopLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('underline', 'decoration-2', 'underline-offset-8', 'font-bold');
+            }
+        });
+
+        // Active drawer links
+        const drawerLinks = document.querySelectorAll('#nav-drawer nav a');
+        drawerLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('bg-primary/10', 'text-primary');
+            }
+        });
+    })();
+</script></body></html>

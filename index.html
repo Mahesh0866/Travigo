@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Travigo | Discover Your Next Adventure</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&amp;family=Work+Sans:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .heart-active {
+            font-variation-settings: 'FILL' 1 !important;
+            color: #5e3670 !important;
+        }
+        /* Custom scrollbar for category bar */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Navigation Drawer Transitions */
+        #nav-drawer {
+            transition: transform 0.3s ease-in-out;
+        }
+        #drawer-overlay {
+            transition: opacity 0.3s ease-in-out;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface-variant": "#4d444f",
+                    "tertiary-container": "#7d5693",
+                    "surface": "#fff7ff",
+                    "primary-fixed": "#f8d8ff",
+                    "on-primary-container": "#f9dbff",
+                    "surface-dim": "#e0d7e5",
+                    "outline-variant": "#d0c2d0",
+                    "secondary-fixed-dim": "#e6b5f9",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed": "#f5d9ff",
+                    "tertiary": "#643e79",
+                    "surface-container-high": "#efe5f4",
+                    "on-background": "#1e1a24",
+                    "tertiary-fixed-dim": "#e3b6fa",
+                    "surface-container-low": "#faf0ff",
+                    "error": "#ba1a1a",
+                    "on-surface": "#1e1a24",
+                    "secondary": "#784e8a",
+                    "on-secondary-fixed": "#2f0642",
+                    "surface-container": "#f4eaf9",
+                    "outline": "#7f7480",
+                    "surface-container-highest": "#e9dfee",
+                    "on-secondary-container": "#6f4681",
+                    "on-tertiary-fixed": "#2d0743",
+                    "secondary-container": "#ecbaff",
+                    "on-tertiary-container": "#f6dbff",
+                    "surface-tint": "#7f4796",
+                    "primary-fixed-dim": "#ebb2ff",
+                    "on-primary-fixed": "#320047",
+                    "on-error": "#ffffff",
+                    "surface-variant": "#e9dfee",
+                    "inverse-surface": "#342e39",
+                    "on-primary": "#ffffff",
+                    "surface-bright": "#fff7ff",
+                    "primary": "#6d3684",
+                    "on-tertiary-fixed-variant": "#5c3771",
+                    "on-error-container": "#93000a",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed": "#f7d8ff",
+                    "on-tertiary": "#ffffff",
+                    "primary-container": "#874f9e",
+                    "inverse-primary": "#ebb2ff",
+                    "inverse-on-surface": "#f7edfc",
+                    "on-secondary-fixed-variant": "#5e3670",
+                    "on-primary-fixed-variant": "#652f7c",
+                    "background": "#fff7ff",
+                    "surface-container-lowest": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "margin-mobile": "16px",
+                    "unit": "4px",
+                    "lg": "24px",
+                    "md": "16px",
+                    "gutter": "24px",
+                    "container-max": "1440px",
+                    "sm": "8px",
+                    "xl": "48px"
+            },
+            "fontFamily": {
+                    "label-md": ["Work Sans"],
+                    "display-lg-mobile": ["Manrope"],
+                    "label-sm": ["Work Sans"],
+                    "display-lg": ["Manrope"],
+                    "headline-lg": ["Manrope"],
+                    "body-lg": ["Work Sans"],
+                    "headline-md": ["Manrope"],
+                    "body-md": ["Work Sans"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "display-lg-mobile": ["36px", {"lineHeight": "42px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+          min-height: 100dvh;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden">
+<!-- Navigation Drawer Overlay -->
+<div class="fixed inset-0 bg-black/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300" id="drawer-overlay" onclick="toggleDrawer()"></div>
+<!-- Navigation Drawer -->
+<aside class="fixed top-0 right-0 h-full w-[280px] bg-surface z-[70] shadow-2xl translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto" id="nav-drawer">
+<div class="flex flex-col h-full p-lg">
+<div class="flex justify-between items-center mb-xl">
+<h2 class="font-headline-md text-primary">Menu</h2>
+<button aria-label="Close Menu" class="p-2 rounded-full hover:bg-surface-container transition-colors" onclick="toggleDrawer()">
+<span class="material-symbols-outlined text-on-surface">close</span>
+</button>
+</div>
+<nav class="flex flex-col gap-sm">
+<a class="flex items-center gap-md p-md rounded-xl hover:bg-primary/5 text-on-surface font-label-md transition-colors" href="index.html">
+<span class="material-symbols-outlined">home</span>
+Home
+</a>
+<a class="flex items-center gap-md p-md rounded-xl hover:bg-primary/5 text-on-surface font-label-md transition-colors" href="about.html">
+<span class="material-symbols-outlined">info</span>
+About Us
+</a>
+<a class="flex items-center gap-md p-md rounded-xl hover:bg-primary/5 text-on-surface font-label-md transition-colors" href="contact.html">
+<span class="material-symbols-outlined">mail</span>
+Contact Us
+</a>
+<a class="flex items-center gap-md p-md rounded-xl hover:bg-primary/5 text-on-surface font-label-md transition-colors" href="liked_places.html">
+<span class="material-symbols-outlined">favorite</span>
+Favourites
+</a>
+<a class="flex items-center gap-md p-md rounded-xl hover:bg-primary/5 text-on-surface font-label-md transition-colors" href="profile.html">
+<span class="material-symbols-outlined">person</span>
+Profile
+</a>
+<a class="mt-auto bg-primary text-on-primary p-md rounded-xl text-center font-label-md shadow-md active:scale-95 transition-transform" href="login.html">
+Login / Sign Up
+</a>
+</nav>
+<div class="mt-xl pt-xl border-t border-surface-container-high">
+<p class="text-on-surface-variant text-label-sm mb-md">Follow Us</p>
+<div class="flex gap-md text-primary font-bold">
+<span class="material-symbols-outlined cursor-pointer hover:opacity-70">public</span>
+<span class="material-symbols-outlined cursor-pointer hover:opacity-70">share</span>
+</div>
+</div>
+</div>
+</aside>
+
+<!-- TopAppBar -->
+
+<header class="bg-primary dark:bg-primary-container full-width top-0 sticky z-50 shadow-md transition-all duration-300" id="top-app-bar">
+<nav class="flex justify-between items-center px-lg py-md w-full max-w-container-max mx-auto transition-all duration-300">
+<div class="flex items-center gap-xl">
+<a class="font-display-lg text-display-lg font-bold text-on-primary whitespace-nowrap" href="index.html">Travigo</a>
+<!-- Desktop Nav Links -->
+<div class="hidden lg:flex items-center gap-lg desktop-nav-links">
+<a class="text-on-primary hover:text-on-primary/80 font-label-md transition-colors" href="index.html">Home</a>
+<a class="text-on-primary hover:text-on-primary/80 font-label-md transition-colors" href="about.html">About Us</a>
+<a class="text-on-primary hover:text-on-primary/80 font-label-md transition-colors" href="contact.html">Contact Us</a>
+<a class="text-on-primary hover:text-on-primary/80 font-label-md transition-colors" href="liked_places.html">Favourites</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<!-- Desktop Login / Profile -->
+<div class="hidden md:flex items-center gap-md">
+<a class="text-on-primary hover:bg-on-primary/10 px-md py-sm rounded-lg font-label-md transition-colors inline-flex items-center gap-xs" href="profile.html">
+<span class="material-symbols-outlined align-middle mr-xs">person</span>Profile
+</a>
+<a class="bg-on-primary text-primary px-lg py-sm rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-all shadow-sm" href="login.html">
+Login / Sign Up
+</a>
+</div>
+<!-- Hamburger Menu Button -->
+<button aria-label="Open Menu" class="flex items-center justify-center p-2 rounded-full hover:bg-on-primary/10 transition-colors lg:hidden" onclick="toggleDrawer()">
+<span class="material-symbols-outlined text-on-primary cursor-pointer text-[28px]">menu</span>
+</button>
+</div>
+</nav>
+</header>
+
+<!-- Navigation Drawer Overlay -->
+
+<!-- Navigation Drawer -->
+
+<main>
+<!-- Hero Section -->
+<section class="bg-primary-container text-on-primary py-xl md:py-32 relative overflow-hidden">
+<!-- Decorative Subtle Ambient Glow -->
+<div class="absolute -top-24 -right-24 w-96 h-96 bg-primary opacity-20 rounded-full blur-3xl"></div>
+<div class="absolute -bottom-24 -left-24 w-96 h-96 bg-secondary opacity-20 rounded-full blur-3xl"></div>
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-lg text-center relative z-10">
+<h1 class="font-display-lg text-display-lg-mobile md:text-[64px] mb-lg max-w-4xl mx-auto leading-[1.1] font-bold">
+                Explore Your Next Adventure
+            </h1>
+<div class="max-w-3xl mx-auto mt-xl">
+<div class="flex flex-col md:flex-row gap-sm bg-white p-2 rounded-2xl shadow-2xl border border-primary/10">
+<div class="flex-1 flex items-center px-lg py-md">
+<span class="material-symbols-outlined text-outline mr-md text-[24px]">search</span>
+<input class="w-full border-none focus:ring-0 text-on-surface font-body-lg p-0 placeholder:text-outline/60" placeholder="Search destinations, tours, or hidden gems..." type="text"/>
+</div>
+<button class="bg-primary text-on-primary px-xl py-lg rounded-xl font-label-md text-label-md hover:bg-primary/90 transition-colors duration-200 shadow-md">
+                        Search Destinations
+                    </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Category Filter Bar -->
+<section class="py-lg bg-surface border-b border-surface-container-high">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-lg">
+<div class="flex items-center gap-md overflow-x-auto hide-scrollbar pb-xs">
+<button class="filter-btn whitespace-nowrap px-lg py-sm rounded-full bg-primary-container text-on-primary font-label-md text-label-md transition-all duration-200 shadow-sm" data-filter="all" onclick="filterPlaces('all', this)">
+                    All Places
+                </button>
+<button class="filter-btn whitespace-nowrap px-lg py-sm rounded-full bg-surface-container-low text-primary-container font-label-md text-label-md hover:bg-surface-container transition-all duration-200 border border-primary/5" data-filter="historical" onclick="filterPlaces('historical', this)">
+                    Historical
+                </button>
+<button class="filter-btn whitespace-nowrap px-lg py-sm rounded-full bg-surface-container-low text-primary-container font-label-md text-label-md hover:bg-surface-container transition-all duration-200 border border-primary/5" data-filter="nature" onclick="filterPlaces('nature', this)">
+                    Nature
+                </button>
+<button class="filter-btn whitespace-nowrap px-lg py-sm rounded-full bg-surface-container-low text-primary-container font-label-md text-label-md hover:bg-surface-container transition-all duration-200 border border-primary/5" data-filter="food" onclick="filterPlaces('food', this)">
+                    Food
+                </button>
+<button class="filter-btn whitespace-nowrap px-lg py-sm rounded-full bg-surface-container-low text-primary-container font-label-md text-label-md hover:bg-surface-container transition-all duration-200 border border-primary/5" data-filter="adventure" onclick="filterPlaces('adventure', this)">
+                    Adventure
+                </button>
+</div>
+</div>
+</section>
+<!-- Popular Places Grid -->
+<section class="py-xl max-w-container-max mx-auto px-margin-mobile md:px-lg">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-xl gap-md">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary">Popular Destinations</h2>
+<p class="text-on-surface-variant font-body-md mt-xs">Curated spots loved by our community of travelers</p>
+</div>
+<button class="text-primary font-label-md text-label-md flex items-center gap-xs hover:underline decoration-2 underline-offset-4 group">
+                View all destinations <span class="material-symbols-outlined text-[18px] transition-transform group-hover:translate-x-1">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Destination Card 1 -->
+<div class="place-card group bg-white rounded-xl shadow-[0px_4px_20px_rgba(94,54,112,0.08)] border border-surface-container-high overflow-hidden transition-all duration-300 hover:bg-surface-container-low hover:translate-y-[-4px]" data-category="nature">
+<div class="relative h-64 w-full overflow-hidden">
+<img alt="Lavender field" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2S7Gej8AmttqUQC9KQb8uWZ3oqxsWj3HB_yqHXkpZOmET8Pve2G4HWW8UDfRI9LFouuMM_25TgiDkAeGXAdyGACgSsRn2Gb0H2lHxBW0OfY0ojfIncZurmh4V1pxaHBxxZ-e7d9wLQNGohFuzMcADY-TkqF8BhiQNX8CjfXSDlPv-RkLimebF3n8mFnc2qsuUEo-ziS5IgMPBKuZgITNwHZfUsa5SnmDBvFYKgee9osiY2jIt8ZGei7WpjjlweBMYP9V3xw_VopY"/>
+<div class="absolute top-md right-md">
+<button class="w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-[#b98ecf] hover:text-[#5e3670] transition-colors shadow-sm active:scale-90 transform" onclick="toggleHeart(this)">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+</div>
+<div class="p-lg">
+<h3 class="font-headline-md text-headline-md text-primary-container mb-xs">Lavender Valley</h3>
+<div class="flex items-center text-on-surface-variant text-sm gap-xs">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+<span class="font-label-sm">Provence, Regional Park</span>
+</div>
+</div>
+</div>
+<!-- Destination Card 2 -->
+<div class="place-card group bg-white rounded-xl shadow-[0px_4px_20px_rgba(94,54,112,0.08)] border border-surface-container-high overflow-hidden transition-all duration-300 hover:bg-surface-container-low hover:translate-y-[-4px]" data-category="historical">
+<div class="relative h-64 w-full overflow-hidden">
+<img alt="Historical castle" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwHtXPGap1JHWxOWfmpcBMII3tSjMe8aGwyOI4cxAeK4sSyTcxzc27WjrXNhD4fXBcePc9iGv2NTQtwL6fqSH1cKIIo2jh33zt_nX2Gs4NR6T_Ms5rfwCZJmm7nfu_d9RMBfqwjqC80S20EFaQKhGLpxsTN02oOnPRrO6OGW2YNweu_aOLP1-2rhUOWohgPCWF010rFx_0ndXsA6E8SqrxTw1Rmc7CAqmYLP-2pnaxDFm8UCaDiBRAWXYxqzrdkKMu9Z63MyHxooo"/>
+<div class="absolute top-md right-md">
+<button class="w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-[#b98ecf] hover:text-[#5e3670] transition-colors shadow-sm active:scale-90 transform" onclick="toggleHeart(this)">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+</div>
+<div class="p-lg">
+<h3 class="font-headline-md text-headline-md text-primary-container mb-xs">Royal Bastion</h3>
+<div class="flex items-center text-on-surface-variant text-sm gap-xs">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+<span class="font-label-sm">Old Town District</span>
+</div>
+</div>
+</div>
+<!-- Destination Card 3 -->
+<div class="place-card group bg-white rounded-xl shadow-[0px_4px_20px_rgba(94,54,112,0.08)] border border-surface-container-high overflow-hidden transition-all duration-300 hover:bg-surface-container-low hover:translate-y-[-4px]" data-category="food">
+<div class="relative h-64 w-full overflow-hidden">
+<img alt="Bistro food" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7eij3dF3Y0PE7HcqcR8sQjVmhA6FWGfUHasqcVYiD4zmCjLbNjappuH51qB3s-qBAKEDaMwNy75HhlbJ0ua-c3sACXcatKC-oFCw4LWJbBXluQQzf98JJpXFhf1jW24Jx2uyxF2PgHDl6o5H20s4bXs9jKN2ogBcz58U0Hh4xItUerkLLjwhye32L4EQNvM2uzBmLBazbZip62JjrjFGHlBFvFD6D_l8HKM3KAoIL_8fP8iDqx6p5T-qSk_0-Bg_g58j5xT7jEbY"/>
+<div class="absolute top-md right-md">
+<button class="w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-[#b98ecf] hover:text-[#5e3670] transition-colors shadow-sm active:scale-90 transform" onclick="toggleHeart(this)">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+</div>
+<div class="p-lg">
+<h3 class="font-headline-md text-headline-md text-primary-container mb-xs">Fig &amp; Honey Bistro</h3>
+<div class="flex items-center text-on-surface-variant text-sm gap-xs">
+<span class="material-symbols-outlined text-[16px]">restaurant</span>
+<span class="font-label-sm">Culinary Quarter</span>
+</div>
+</div>
+</div>
+<!-- Destination Card 4 -->
+<div class="place-card group bg-white rounded-xl shadow-[0px_4px_20px_rgba(94,54,112,0.08)] border border-surface-container-high overflow-hidden transition-all duration-300 hover:bg-surface-container-low hover:translate-y-[-4px]" data-category="adventure">
+<div class="relative h-64 w-full overflow-hidden">
+<img alt="Misty lake" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcJhnEc7CNRCbP4DUF3tsNsh-HNMluU4AcbcbUvDqzsA2_y5N6USfWtStszgXKFLR3NEs7YEuqOWmvAE5uOQefHr0GI3V3TokhTAtp2_090NJCDq_qx0TQMpRPq4gJIURgffRIy7CwINbS5kYZ7KJsJuFCFvMBhmr5xV62pz_16UHxOtWLr3jja-SsnTStYqsqDCHzyRkFIbEZ2swdWiuy6aGi81nUfhq1oImF0ucGx3W1FBwD1HMAK0stsOh41FQr00NygNxvKQs"/>
+<div class="absolute top-md right-md">
+<button class="w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-[#b98ecf] hover:text-[#5e3670] transition-colors shadow-sm active:scale-90 transform" onclick="toggleHeart(this)">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+</div>
+<div class="p-lg">
+<h3 class="font-headline-md text-headline-md text-primary-container mb-xs">Misty Peak Lake</h3>
+<div class="flex items-center text-on-surface-variant text-sm gap-xs">
+<span class="material-symbols-outlined text-[16px]">hiking</span>
+<span class="font-label-sm">North Adventure Zone</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-xl mb-xl">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-lg">
+<div class="bg-primary p-xl md:p-24 rounded-[32px] text-center relative overflow-hidden shadow-xl">
+<div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+<h2 class="font-headline-lg text-headline-lg md:text-[48px] text-on-primary mb-md leading-tight">Ready to start your journey?</h2>
+<p class="text-on-primary/80 font-body-lg mb-xl max-w-2xl mx-auto">Join thousands of travelers who have discovered the hidden gems and authentic experiences of our local region.</p>
+<div class="flex flex-col sm:flex-row justify-center gap-md">
+<button class="bg-on-primary text-primary px-xl py-lg rounded-xl font-label-md text-label-md font-bold shadow-lg hover:bg-secondary-fixed transition-all duration-200">
+                        Download Mobile App
+                    </button>
+<button class="border-2 border-on-primary text-on-primary px-xl py-lg rounded-xl font-label-md text-label-md font-bold hover:bg-on-primary hover:text-primary transition-all duration-200">
+                        Subscribe to Newsletter
+                    </button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-on-secondary-fixed-variant dark:bg-inverse-surface full-width">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-xl px-xl py-xl w-full max-w-container-max mx-auto">
+<div class="space-y-md">
+<a class="font-headline-md text-headline-md text-on-primary block" href="index.html">Travigo</a>
+<p class="text-on-primary/70 font-body-md max-w-sm">Your ultimate guide to local adventures, authentic experiences, and hidden treasures in the heart of our region. Dedicated to sustainable and local tourism.</p>
+</div>
+<div class="flex flex-col gap-md">
+<h4 class="text-on-primary font-bold font-label-md">Quick Links</h4>
+<div class="grid grid-cols-2 gap-sm">
+<a class="text-on-primary/70 font-label-sm text-label-sm hover:text-secondary-fixed transition-colors opacity-80 hover:opacity-100" href="index.html">Home</a>
+<a class="text-on-primary/70 font-label-sm text-label-sm hover:text-secondary-fixed transition-colors opacity-80 hover:opacity-100" href="about.html">About Us</a>
+<a class="text-on-primary/70 font-label-sm text-label-sm hover:text-secondary-fixed transition-colors opacity-80 hover:opacity-100" href="contact.html">Contact</a>
+<a class="text-on-primary/70 font-label-sm text-label-sm hover:text-secondary-fixed transition-colors opacity-80 hover:opacity-100" href="liked_places.html">Favourites</a>
+<a class="text-on-primary/70 font-label-sm text-label-sm hover:text-secondary-fixed transition-colors opacity-80 hover:opacity-100" href="profile.html">Your Profile</a>
+</div>
+</div>
+<div class="space-y-md">
+<h4 class="text-on-primary font-bold font-label-md">Stay Connected</h4>
+<div class="flex gap-md mb-xl">
+<a class="material-symbols-outlined text-on-primary cursor-pointer hover:text-secondary-fixed transition-colors" href="#">public</a>
+<a class="material-symbols-outlined text-on-primary cursor-pointer hover:text-secondary-fixed transition-colors" href="#">mail</a>
+<a class="material-symbols-outlined text-on-primary cursor-pointer hover:text-secondary-fixed transition-colors" href="#">share</a>
+</div>
+<p class="text-on-primary/70 font-label-sm text-label-sm">© 2024 Travigo. All rights reserved.</p>
+</div>
+</div>
+</footer>
+
+<script id="navigation-root-scripts">// Page Specific Scripts
+
+    function toggleHeart(button) {
+        const icon = button.querySelector('.material-symbols-outlined');
+        icon.classList.toggle('heart-active');
+        
+        // Interaction scale effect
+        button.classList.add('scale-125');
+        setTimeout(() => {
+            button.classList.remove('scale-125');
+        }, 150);
+    }
+    
+    function filterPlaces(category, btnElement) {
+        // Update active button styles
+        const buttons = document.querySelectorAll('.filter-btn');
+        buttons.forEach(btn => {
+            btn.classList.remove('bg-primary-container', 'text-on-primary', 'shadow-sm');
+            btn.classList.add('bg-surface-container-low', 'text-primary-container', 'border', 'border-primary/5');
+        });
+        
+        btnElement.classList.remove('bg-surface-container-low', 'text-primary-container', 'border', 'border-primary/5');
+        btnElement.classList.add('bg-primary-container', 'text-on-primary', 'shadow-sm');
+
+        // Filter cards
+        const cards = document.querySelectorAll('.place-card');
+        cards.forEach(card => {
+            if (category === 'all' || card.getAttribute('data-category') === category) {
+                card.style.display = 'block';
+                // Add tiny animation to feel responsive
+                card.style.animation = 'none';
+                card.offsetHeight; // trigger reflow
+                card.style.animation = 'fadeIn 0.3s ease-out forwards';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // Dynamic keyframes for fade in
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    `;
+    document.head.appendChild(style);
+
+// Unified Navigation Drawer & Utilities
+
+    function toggleDrawer() {
+        const drawer = document.getElementById('nav-drawer');
+        const overlay = document.getElementById('drawer-overlay');
+        const body = document.body;
+        
+        if (drawer.classList.contains('translate-x-full')) {
+            drawer.classList.remove('translate-x-full');
+            overlay.classList.remove('opacity-0', 'pointer-events-none');
+            overlay.classList.add('opacity-100', 'pointer-events-auto');
+            body.style.overflow = 'hidden';
+        } else {
+            drawer.classList.add('translate-x-full');
+            overlay.classList.remove('opacity-100', 'pointer-events-auto');
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+            body.style.overflow = '';
+        }
+    }
+
+    // Scroll shrink header logic
+    window.addEventListener('scroll', () => {
+        const header = document.getElementById('top-app-bar');
+        const nav = header.querySelector('nav');
+        if (window.scrollY > 20) {
+            header.classList.add('bg-primary/95', 'backdrop-blur-md');
+            nav.classList.remove('py-md');
+            nav.classList.add('py-sm');
+        } else {
+            header.classList.remove('bg-primary/95', 'backdrop-blur-md');
+            nav.classList.remove('py-sm');
+            nav.classList.add('py-md');
+        }
+    });
+
+    // Set active link style based on current URL path
+    (function() {
+        let currentPath = window.location.pathname.split("/").pop();
+        if (!currentPath || currentPath === "/") {
+            currentPath = "index.html";
+        }
+        
+        // Active desktop links
+        const desktopLinks = document.querySelectorAll('.desktop-nav-links a');
+        desktopLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('underline', 'decoration-2', 'underline-offset-8', 'font-bold');
+            }
+        });
+
+        // Active drawer links
+        const drawerLinks = document.querySelectorAll('#nav-drawer nav a');
+        drawerLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('bg-primary/10', 'text-primary');
+            }
+        });
+    })();
+</script></body></html>

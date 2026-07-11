@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html class="light" lang="en" style=""><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Profile - Travigo</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Work+Sans:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#e6b5f9",
+                    "on-primary-fixed": "#320047",
+                    "background": "#fff7ff",
+                    "on-primary-fixed-variant": "#652f7c",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed": "#2d0743",
+                    "on-tertiary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "surface": "#fff7ff",
+                    "tertiary-container": "#7d5693",
+                    "on-surface": "#1e1a24",
+                    "tertiary-fixed": "#f5d9ff",
+                    "surface-variant": "#e9dfee",
+                    "surface-bright": "#fff7ff",
+                    "secondary": "#784e8a",
+                    "on-tertiary-container": "#f6dbff",
+                    "on-secondary-container": "#6f4681",
+                    "error": "#ba1a1a",
+                    "outline-variant": "#d0c2d0",
+                    "surface-tint": "#7f4796",
+                    "inverse-primary": "#ebb2ff",
+                    "tertiary-fixed-dim": "#e3b6fa",
+                    "secondary-container": "#ecbaff",
+                    "on-surface-variant": "#4d444f",
+                    "surface-container": "#f4eaf9",
+                    "on-secondary-fixed": "#2f0642",
+                    "surface-container-low": "#faf0ff",
+                    "secondary-fixed": "#f7d8ff",
+                    "primary-container": "#874f9e",
+                    "surface-container-lowest": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "surface-container-high": "#efe5f4",
+                    "surface-dim": "#e0d7e5",
+                    "tertiary": "#643e79",
+                    "on-secondary-fixed-variant": "#5e3670",
+                    "inverse-on-surface": "#f7edfc",
+                    "on-primary-container": "#f9dbff",
+                    "primary-fixed": "#f8d8ff",
+                    "on-secondary": "#ffffff",
+                    "outline": "#7f7480",
+                    "on-tertiary-fixed-variant": "#5c3771",
+                    "on-primary": "#ffffff",
+                    "inverse-surface": "#342e39",
+                    "primary-fixed-dim": "#ebb2ff",
+                    "primary": "#6d3684",
+                    "surface-container-highest": "#e9dfee",
+                    "on-background": "#1e1a24"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "md": "16px",
+                    "gutter": "24px",
+                    "lg": "24px",
+                    "unit": "4px",
+                    "container-max": "1440px",
+                    "xl": "48px",
+                    "xs": "4px",
+                    "sm": "8px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Work Sans"],
+                    "label-md": ["Work Sans"],
+                    "body-md": ["Work Sans"],
+                    "body-lg": ["Work Sans"],
+                    "headline-md": ["Manrope"],
+                    "display-lg-mobile": ["Manrope"],
+                    "headline-lg": ["Manrope"],
+                    "display-lg": ["Manrope"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg-mobile": ["36px", {"lineHeight": "42px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .soft-ambient-shadow {
+            box-shadow: 0px 4px 20px rgba(94, 54, 112, 0.08);
+        }
+        .floating-shadow {
+            box-shadow: 0px 10px 30px rgba(94, 54, 112, 0.12);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f3e9f8;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #874f9e;
+            border-radius: 10px;
+        }
+    </style>
+<style>
+    body {
+      min-height: 100dvh;
+    }
+    #nav-drawer {
+        transition: transform 0.3s ease-in-out;
+        transform: translateX(100%);
+    }
+    #nav-drawer.open {
+        transform: translateX(0);
+    }
+    #drawer-overlay {
+        transition: opacity 0.3s ease-in-out;
+        opacity: 0;
+        pointer-events: none;
+    }
+    #drawer-overlay.open {
+        opacity: 1;
+        pointer-events: auto;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md text-body-md overflow-x-hidden" data-mode="connect">
+<!-- Navigation Drawer Overlay -->
+<div class="fixed inset-0 bg-black/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300" id="drawer-overlay" onclick="toggleDrawer()"></div>
+<!-- Navigation Drawer -->
+<aside class="fixed top-0 right-0 h-full w-[280px] bg-surface z-[70] shadow-2xl translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto" id="nav-drawer">
+<div class="flex flex-col h-full p-lg">
+<div class="flex justify-between items-center mb-xl">
+<h2 class="font-headline-md text-primary">Menu</h2>
+<button aria-label="Close Menu" class="p-2 rounded-full hover:bg-surface-container transition-colors" onclick="toggleDrawer()">
+<span class="material-symbols-outlined text-on-surface">close</span>
+</button>
+</div>
+<nav class="flex flex-col gap-sm">
+<a class="flex items-center gap-md p-md rounded-xl hover:bg-primary/5 text-on-surface font-label-md transition-colors" href="index.html">
+<span class="material-symbols-outlined">home</span>
+Home
+</a>
+<a class="flex items-center gap-md p-md rounded-xl hover:bg-primary/5 text-on-surface font-label-md transition-colors" href="about.html">
+<span class="material-symbols-outlined">info</span>
+About Us
+</a>
+<a class="flex items-center gap-md p-md rounded-xl hover:bg-primary/5 text-on-surface font-label-md transition-colors" href="contact.html">
+<span class="material-symbols-outlined">mail</span>
+Contact Us
+</a>
+<a class="flex items-center gap-md p-md rounded-xl hover:bg-primary/5 text-on-surface font-label-md transition-colors" href="liked_places.html">
+<span class="material-symbols-outlined">favorite</span>
+Favourites
+</a>
+<a class="flex items-center gap-md p-md rounded-xl hover:bg-primary/5 text-on-surface font-label-md transition-colors" href="profile.html">
+<span class="material-symbols-outlined">person</span>
+Profile
+</a>
+<a class="mt-auto bg-primary text-on-primary p-md rounded-xl text-center font-label-md shadow-md active:scale-95 transition-transform" href="login.html">
+Login / Sign Up
+</a>
+</nav>
+<div class="mt-xl pt-xl border-t border-surface-container-high">
+<p class="text-on-surface-variant text-label-sm mb-md">Follow Us</p>
+<div class="flex gap-md text-primary font-bold">
+<span class="material-symbols-outlined cursor-pointer hover:opacity-70">public</span>
+<span class="material-symbols-outlined cursor-pointer hover:opacity-70">share</span>
+</div>
+</div>
+</div>
+</aside>
+
+<!-- TopAppBar -->
+
+<header class="bg-primary dark:bg-primary-container full-width top-0 sticky z-50 shadow-md transition-all duration-300" id="top-app-bar">
+<nav class="flex justify-between items-center px-lg py-md w-full max-w-container-max mx-auto transition-all duration-300">
+<div class="flex items-center gap-xl">
+<a class="font-display-lg text-display-lg font-bold text-on-primary whitespace-nowrap" href="index.html">Travigo</a>
+<!-- Desktop Nav Links -->
+<div class="hidden lg:flex items-center gap-lg desktop-nav-links">
+<a class="text-on-primary hover:text-on-primary/80 font-label-md transition-colors" href="index.html">Home</a>
+<a class="text-on-primary hover:text-on-primary/80 font-label-md transition-colors" href="about.html">About Us</a>
+<a class="text-on-primary hover:text-on-primary/80 font-label-md transition-colors" href="contact.html">Contact Us</a>
+<a class="text-on-primary hover:text-on-primary/80 font-label-md transition-colors" href="liked_places.html">Favourites</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<!-- Desktop Login / Profile -->
+<div class="hidden md:flex items-center gap-md">
+<a class="text-on-primary hover:bg-on-primary/10 px-md py-sm rounded-lg font-label-md transition-colors inline-flex items-center gap-xs" href="profile.html">
+<span class="material-symbols-outlined align-middle mr-xs">person</span>Profile
+</a>
+<a class="bg-on-primary text-primary px-lg py-sm rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-all shadow-sm" href="login.html">
+Login / Sign Up
+</a>
+</div>
+<!-- Hamburger Menu Button -->
+<button aria-label="Open Menu" class="flex items-center justify-center p-2 rounded-full hover:bg-on-primary/10 transition-colors lg:hidden" onclick="toggleDrawer()">
+<span class="material-symbols-outlined text-on-primary cursor-pointer text-[28px]">menu</span>
+</button>
+</div>
+</nav>
+</header>
+
+<!-- Navigation Drawer (Mobile Side Menu) -->
+
+
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-container-max mx-auto px-margin-mobile md:px-lg lg:px-xl py-xl">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-xl">
+<!-- Profile Sidebar / Summary -->
+<aside class="lg:col-span-4 flex flex-col gap-lg">
+<div class="bg-surface-container-low rounded-xl p-lg lg:p-xl soft-ambient-shadow border border-surface-variant flex flex-col items-center text-center">
+<div class="relative group cursor-pointer">
+<div class="w-40 h-40 rounded-full border-4 border-primary-container overflow-hidden bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="A professional and friendly headshot of Alex Rivera, a person in their late 20s with a warm smile, set against a blurred background of a vibrant local cafe. The lighting is soft and natural, emphasizing a clean and high-end modern corporate portrait style. The overall color palette features muted purples and clean whites to match the Travigo brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAk-vBqRtz6Syxong_eI3iWj1FbrOg3YDpT7xa3nQ6ZiwuG_C5p-1bOUpDqlSnP3ZoRgK6W3wnTpMxRmUcNSZj4V9_E-WxChN-VCBvm1eRgYv4PtgJLYxexpXIMTqMU3_X5s6as4c3GG5Le8lGBggvmLrSEuiSBg8dY9QiL__gzm0tnQv5lE4ITXLmI_OLVN9BA_QnU6Ael6yvnNGPYZx6C5qy7fQJYE5cyrDEK0sRsE-ibO7YERfOxiRLpa5s950jWoKa9dp1ggPM"/>
+</div>
+<div class="absolute bottom-2 right-2 bg-primary text-on-primary rounded-full p-2 floating-shadow opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</div>
+</div>
+<div class="mt-lg">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Alex Rivera</h2>
+<p class="font-label-md text-label-md text-on-surface-variant">alex@example.com</p>
+</div>
+<div class="w-full mt-xl pt-lg border-t border-outline-variant flex justify-around">
+<div class="flex flex-col items-center">
+<span class="font-headline-md text-headline-md text-primary">12</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Liked</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-headline-md text-headline-md text-primary">4</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Reviews</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-headline-md text-headline-md text-primary">8</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Trips</span>
+</div>
+</div>
+</div>
+<!-- Stats Badge Section -->
+<div class="bg-surface-container-low rounded-xl p-lg soft-ambient-shadow border border-surface-variant">
+<div class="flex items-center justify-between mb-md">
+<h3 class="font-label-md text-label-md text-on-secondary-fixed-variant">My Liked Places</h3>
+<span class="bg-primary/10 text-primary font-bold px-3 py-1 rounded-full text-label-md">12</span>
+</div>
+<div class="flex flex-wrap gap-sm">
+<span class="bg-surface-container text-on-secondary-fixed-variant font-label-sm px-3 py-1 rounded-lg border border-surface-variant">Historic Downtown</span>
+<span class="bg-surface-container text-on-secondary-fixed-variant font-label-sm px-3 py-1 rounded-lg border border-surface-variant">River Walk</span>
+<span class="bg-surface-container text-on-secondary-fixed-variant font-label-sm px-3 py-1 rounded-lg border border-surface-variant">Peak Brewery</span>
+<a class="text-primary font-label-sm px-2 py-1 hover:underline" href="liked_places.html">+9 more</a>
+</div>
+</div>
+</aside>
+<!-- Profile Settings Main Card -->
+<section class="lg:col-span-8">
+<div class="bg-[#f3e9f8] rounded-xl p-lg lg:p-xl soft-ambient-shadow border border-outline-variant/20 flex flex-col h-full">
+<div class="flex items-center gap-sm mb-xl">
+<span class="material-symbols-outlined text-primary-container scale-125">settings</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Account Settings</h2>
+</div>
+<form class="space-y-xl flex-grow" id="profileForm">
+<!-- Location Field -->
+<div class="space-y-sm">
+<label class="block font-label-md text-label-md text-on-secondary-fixed-variant" for="location">
+                                Location
+                            </label>
+<div class="relative max-w-lg">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">location_on</span>
+<input class="w-full bg-white border border-[#b98ecf] rounded-lg py-3 pl-10 pr-md focus:ring-2 focus:ring-primary-container focus:border-primary-container outline-none transition-all duration-200 text-on-surface" id="location" placeholder="Enter your city" type="text" value="San Antonio, TX"/>
+</div>
+<h4 class="text-primary-container font-label-md pt-1 uppercase tracking-wider text-[10px]">Primary Region</h4>
+</div>
+<!-- Bio Field -->
+<div class="space-y-sm">
+<label class="block font-label-md text-label-md text-on-secondary-fixed-variant" for="bio">
+                                Bio
+                            </label>
+<textarea class="w-full bg-white border border-[#b98ecf] rounded-lg p-md focus:ring-2 focus:ring-primary-container focus:border-primary-container outline-none transition-all duration-200 text-on-surface custom-scrollbar resize-none" id="bio" placeholder="Tell us about your travel style..." rows="6">Explorer at heart. I love finding hidden gems in local neighborhoods and supporting family-owned bistros. Always looking for the next scenic hiking trail or a quiet bookstore.</textarea>
+<h4 class="text-primary-container font-label-md pt-1 uppercase tracking-wider text-[10px]">Personal Narrative</h4>
+</div>
+<!-- Preferences Toggle -->
+<div class="bg-white/50 p-lg rounded-lg border border-[#b98ecf]/30 space-y-md max-w-lg">
+<h3 class="font-label-md text-label-md text-on-secondary-fixed-variant">Email Notifications</h3>
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant font-body-md">New place recommendations</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+</div>
+<!-- Form Actions -->
+<div class="flex flex-col sm:flex-row gap-lg pt-xl mt-auto">
+<button class="sm:w-64 bg-primary-container hover:bg-on-secondary-fixed-variant text-white font-label-md py-3.5 px-lg rounded-lg transition-all duration-200 flex items-center justify-center gap-2 hover:shadow-lg scale-100 active:scale-95" type="submit">
+<span class="material-symbols-outlined text-[20px]">save</span>
+                                Save Changes
+                            </button>
+<button class="sm:w-32 px-lg py-3.5 border-2 border-primary-container text-primary-container font-label-md rounded-lg hover:bg-surface-container transition-all scale-100 active:scale-95" type="button">
+                                Cancel
+                            </button>
+</div>
+</form>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-on-secondary-fixed-variant text-on-primary mt-xl">
+<div class="max-w-container-max mx-auto px-xl py-xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-xl">
+<div class="space-y-md lg:col-span-1">
+<h2 class="font-display-lg text-headline-md font-bold text-on-primary">Travigo</h2>
+<p class="font-body-md text-on-primary/70 leading-relaxed max-w-xs">Connecting curious travelers with authentic local experiences since 2024. Your journey starts here.</p>
+</div>
+<div class="flex flex-col gap-md">
+<h3 class="font-label-md uppercase tracking-widest text-secondary-fixed border-b border-on-primary/10 pb-2">Explore</h3>
+<nav class="flex flex-col gap-sm">
+<a class="font-label-sm text-on-primary/70 hover:text-secondary-fixed transition-colors" href="index.html">Home</a>
+<a class="font-label-sm text-on-primary/70 hover:text-secondary-fixed transition-colors" href="liked_places.html">Liked Places</a>
+<a class="font-label-sm text-on-primary/70 hover:text-secondary-fixed transition-colors" href="#">Trending Cities</a>
+<a class="font-label-sm text-on-primary/70 hover:text-secondary-fixed transition-colors" href="#">Local Guides</a>
+</nav>
+</div>
+<div class="flex flex-col gap-md">
+<h3 class="font-label-md uppercase tracking-widest text-secondary-fixed border-b border-on-primary/10 pb-2">Support</h3>
+<nav class="flex flex-col gap-sm">
+<a class="font-label-sm text-on-primary/70 hover:text-secondary-fixed transition-colors" href="about.html">About Us</a>
+<a class="font-label-sm text-on-primary/70 hover:text-secondary-fixed transition-colors" href="contact.html">Contact Us</a>
+<a class="font-label-sm text-on-primary/70 hover:text-secondary-fixed transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-sm text-on-primary/70 hover:text-secondary-fixed transition-colors" href="#">Terms of Service</a>
+</nav>
+</div>
+<div class="space-y-md">
+<h3 class="font-label-md uppercase tracking-widest text-secondary-fixed border-b border-on-primary/10 pb-2">Newsletter</h3>
+<p class="font-label-sm text-on-primary/70">Get monthly updates on hidden gems.</p>
+<div class="flex gap-2">
+<input class="bg-white/10 border border-on-primary/20 rounded-lg px-md py-2.5 text-on-primary focus:outline-none focus:border-secondary-fixed w-full text-sm" placeholder="Your email" type="email"/>
+<button class="bg-secondary-fixed text-on-secondary-fixed px-lg py-2.5 rounded-lg hover:bg-secondary-fixed-dim transition-colors font-label-md">
+                        Join
+                    </button>
+</div>
+</div>
+</div>
+<div class="border-t border-on-primary/10 py-6 text-center">
+<p class="font-label-sm text-on-primary/50">© 2024 Travigo. All rights reserved. Made with love for the local explorer.</p>
+</div>
+</footer>
+
+<script id="navigation-root-scripts">// Page Specific Scripts
+
+    window.handleLogout = function() {
+        if(confirm('Are you sure you want to logout?')) {
+            alert('Logged out successfully');
+            window.location.href = "login.html";
+        }
+    }
+
+    const pForm = document.getElementById('profileForm');
+    if (pForm) {
+        pForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalContent = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = '<span class="material-symbols-outlined animate-bounce">check_circle</span> Saved!';
+            submitBtn.classList.replace('bg-primary-container', 'bg-green-600');
+            
+            setTimeout(() => {
+                submitBtn.innerHTML = originalContent;
+                submitBtn.classList.replace('bg-green-600', 'bg-primary-container');
+            }, 3000);
+        });
+    }
+    
+
+// Unified Navigation Drawer & Utilities
+
+    function toggleDrawer() {
+        const drawer = document.getElementById('nav-drawer');
+        const overlay = document.getElementById('drawer-overlay');
+        const body = document.body;
+        
+        if (drawer.classList.contains('translate-x-full')) {
+            drawer.classList.remove('translate-x-full');
+            overlay.classList.remove('opacity-0', 'pointer-events-none');
+            overlay.classList.add('opacity-100', 'pointer-events-auto');
+            body.style.overflow = 'hidden';
+        } else {
+            drawer.classList.add('translate-x-full');
+            overlay.classList.remove('opacity-100', 'pointer-events-auto');
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+            body.style.overflow = '';
+        }
+    }
+
+    // Scroll shrink header logic
+    window.addEventListener('scroll', () => {
+        const header = document.getElementById('top-app-bar');
+        const nav = header.querySelector('nav');
+        if (window.scrollY > 20) {
+            header.classList.add('bg-primary/95', 'backdrop-blur-md');
+            nav.classList.remove('py-md');
+            nav.classList.add('py-sm');
+        } else {
+            header.classList.remove('bg-primary/95', 'backdrop-blur-md');
+            nav.classList.remove('py-sm');
+            nav.classList.add('py-md');
+        }
+    });
+
+    // Set active link style based on current URL path
+    (function() {
+        let currentPath = window.location.pathname.split("/").pop();
+        if (!currentPath || currentPath === "/") {
+            currentPath = "index.html";
+        }
+        
+        // Active desktop links
+        const desktopLinks = document.querySelectorAll('.desktop-nav-links a');
+        desktopLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('underline', 'decoration-2', 'underline-offset-8', 'font-bold');
+            }
+        });
+
+        // Active drawer links
+        const drawerLinks = document.querySelectorAll('#nav-drawer nav a');
+        drawerLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('bg-primary/10', 'text-primary');
+            }
+        });
+    })();
+</script></body></html>

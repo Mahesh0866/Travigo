@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html class="light" lang="en" style="">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Login - Travigo</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700&amp;family=Work+Sans:wght@400;500;600&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#f4eaf9",
+                        "surface-bright": "#fff7ff",
+                        "secondary-fixed": "#f7d8ff",
+                        "on-secondary-fixed-variant": "#5e3670",
+                        "outline": "#7f7480",
+                        "inverse-on-surface": "#f7edfc",
+                        "secondary-fixed-dim": "#e6b5f9",
+                        "primary-fixed-dim": "#ebb2ff",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#faf0ff",
+                        "background": "#fff7ff",
+                        "surface-variant": "#e9dfee",
+                        "secondary": "#784e8a",
+                        "on-tertiary-fixed": "#2d0743",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#efe5f4",
+                        "primary": "#6d3684",
+                        "inverse-surface": "#342e39",
+                        "secondary-container": "#ecbaff",
+                        "inverse-primary": "#ebb2ff",
+                        "surface-tint": "#7f4796",
+                        "surface-container-highest": "#e9dfee",
+                        "outline-variant": "#d0c2d0",
+                        "on-secondary-container": "#6f4681",
+                        "primary-fixed": "#f8d8ff",
+                        "on-tertiary-fixed-variant": "#5c3771",
+                        "on-surface-variant": "#4d444f",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#e0d7e5",
+                        "surface": "#fff7ff",
+                        "on-background": "#1e1a24",
+                        "on-primary-fixed-variant": "#652f7c",
+                        "tertiary-container": "#7d5693",
+                        "on-secondary-fixed": "#2f0642",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#f9dbff",
+                        "primary-container": "#874f9e",
+                        "tertiary-fixed-dim": "#e3b6fa",
+                        "tertiary-fixed": "#f5d9ff",
+                        "on-surface": "#1e1a24",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#f6dbff",
+                        "tertiary": "#643e79",
+                        "on-primary-fixed": "#320047"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "xl": "48px",
+                        "margin-mobile": "16px",
+                        "lg": "24px",
+                        "unit": "4px",
+                        "container-max": "1280px",
+                        "gutter": "24px",
+                        "sm": "8px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Work Sans"],
+                        "display-lg": ["Manrope"],
+                        "headline-md": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "display-lg-mobile": ["Manrope"],
+                        "body-md": ["Work Sans"],
+                        "body-lg": ["Work Sans"],
+                        "label-sm": ["Work Sans"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "display-lg-mobile": ["36px", { "lineHeight": "42px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+
+        .soft-shadow {
+            box-shadow: 0px 4px 20px rgba(94, 54, 112, 0.08);
+        }
+
+        .floating-shadow {
+            box-shadow: 0px 10px 30px rgba(94, 54, 112, 0.12);
+        }
+
+        body {
+            background-color: #fff7ff;
+            color: #1e1a24;
+        }
+    </style>
+    <style>
+        body {
+            min-height: 100dvh;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+    <!-- Navigation Drawer Overlay -->
+    <div class="fixed inset-0 bg-black/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300"
+        id="drawer-overlay" onclick="toggleDrawer()"></div>
+    <!-- Navigation Drawer -->
+    <aside
+        class="fixed top-0 right-0 h-full w-[280px] bg-surface z-[70] shadow-2xl translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto"
+        id="nav-drawer">
+        <div class="flex flex-col h-full p-lg">
+            <div class="flex justify-between items-center mb-xl">
+                <h2 class="font-headline-md text-primary">Menu</h2>
+                <button aria-label="Close Menu" class="p-2 rounded-full hover:bg-surface-container transition-colors"
+                    onclick="toggleDrawer()">
+                    <span class="material-symbols-outlined text-on-surface">close</span>
+                </button>
+            </div>
+            <nav class="flex flex-col gap-sm">
+                <a class="flex items-center gap-md p-md rounded-xl hover:bg-primary/5 text-on-surface font-label-md transition-colors"
+                    href="index.html">
+                    <span class="material-symbols-outlined">home</span>
+                    Home
+                </a>
+                <a class="flex items-center gap-md p-md rounded-xl hover:bg-primary/5 text-on-surface font-label-md transition-colors"
+                    href="about.html">
+                    <span class="material-symbols-outlined">info</span>
+                    About Us
+                </a>
+                <a class="flex items-center gap-md p-md rounded-xl hover:bg-primary/5 text-on-surface font-label-md transition-colors"
+                    href="contact.html">
+                    <span class="material-symbols-outlined">mail</span>
+                    Contact Us
+                </a>
+                <a class="flex items-center gap-md p-md rounded-xl hover:bg-primary/5 text-on-surface font-label-md transition-colors"
+                    href="liked_places.html">
+                    <span class="material-symbols-outlined">favorite</span>
+                    Favourites
+                </a>
+                <a class="flex items-center gap-md p-md rounded-xl hover:bg-primary/5 text-on-surface font-label-md transition-colors"
+                    href="profile.html">
+                    <span class="material-symbols-outlined">person</span>
+                    Profile
+                </a>
+                <a class="mt-auto bg-primary text-on-primary p-md rounded-xl text-center font-label-md shadow-md active:scale-95 transition-transform"
+                    href="login.html">
+                    Login / Sign Up
+                </a>
+            </nav>
+            <div class="mt-xl pt-xl border-t border-surface-container-high">
+                <p class="text-on-surface-variant text-label-sm mb-md">Follow Us</p>
+                <div class="flex gap-md text-primary font-bold">
+                    <span class="material-symbols-outlined cursor-pointer hover:opacity-70">public</span>
+                    <span class="material-symbols-outlined cursor-pointer hover:opacity-70">share</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- TopAppBar (Desktop Enhanced) -->
+
+    <header
+        class="bg-primary dark:bg-primary-container full-width top-0 sticky z-50 shadow-md transition-all duration-300"
+        id="top-app-bar">
+        <nav
+            class="flex justify-between items-center px-lg py-md w-full max-w-container-max mx-auto transition-all duration-300">
+            <div class="flex items-center gap-xl">
+                <a class="font-display-lg text-display-lg font-bold text-on-primary whitespace-nowrap"
+                    href="index.html">Travigo</a>
+                <!-- Desktop Nav Links -->
+                <div class="hidden lg:flex items-center gap-lg desktop-nav-links">
+                    <a class="text-on-primary hover:text-on-primary/80 font-label-md transition-colors"
+                        href="index.html">Home</a>
+                    <a class="text-on-primary hover:text-on-primary/80 font-label-md transition-colors"
+                        href="about.html">About Us</a>
+                    <a class="text-on-primary hover:text-on-primary/80 font-label-md transition-colors"
+                        href="contact.html">Contact Us</a>
+                    <a class="text-on-primary hover:text-on-primary/80 font-label-md transition-colors"
+                        href="liked_places.html">Favourites</a>
+                </div>
+            </div>
+            <div class="flex items-center gap-md">
+                <!-- Desktop Login / Profile -->
+                <div class="hidden md:flex items-center gap-md">
+                    <a class="text-on-primary hover:bg-on-primary/10 px-md py-sm rounded-lg font-label-md transition-colors inline-flex items-center gap-xs"
+                        href="profile.html">
+                        <span class="material-symbols-outlined align-middle mr-xs">person</span>Profile
+                    </a>
+                    <a class="bg-on-primary text-primary px-lg py-sm rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-all shadow-sm"
+                        href="login.html">
+                        Login / Sign Up
+                    </a>
+                </div>
+                <!-- Hamburger Menu Button -->
+                <button aria-label="Open Menu"
+                    class="flex items-center justify-center p-2 rounded-full hover:bg-on-primary/10 transition-colors lg:hidden"
+                    onclick="toggleDrawer()">
+                    <span class="material-symbols-outlined text-on-primary cursor-pointer text-[28px]">menu</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Canvas -->
+    <main
+        class="flex-grow flex items-center justify-center bg-surface-container-low px-margin-mobile py-xl relative overflow-hidden min-h-[700px]">
+        <!-- Atmospheric Background Element -->
+        <div
+            class="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(circle_at_50%_50%,_var(--tw-gradient-from)_0%,_transparent_50%)] from-primary-fixed">
+        </div>
+        <!-- Login Card -->
+        <div
+            class="bg-surface-container-lowest border border-surface-variant rounded-xl w-full max-w-md p-lg md:p-xl floating-shadow relative z-10 animate-fade-in-up">
+            <div class="text-center mb-lg">
+                <h1 class="font-headline-lg text-headline-lg text-primary mb-xs">Welcome Back</h1>
+                <p class="font-body-md text-body-md text-on-surface-variant">Sign in to explore your local gems</p>
+            </div>
+            <form class="space-y-md" onsubmit="return false;">
+                <!-- Email Field -->
+                <div>
+                    <label class="block font-label-md text-label-md text-on-secondary-fixed-variant mb-xs"
+                        for="email">Email Address</label>
+                    <input
+                        class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-md py-sm font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200"
+                        id="email" placeholder="alex@example.com" type="email" />
+                </div>
+                <!-- Password Field -->
+                <div class="relative">
+                    <div class="flex justify-between items-center mb-xs">
+                        <label class="block font-label-md text-label-md text-on-secondary-fixed-variant"
+                            for="password">Password</label>
+                        <a class="font-label-sm text-label-sm text-primary hover:underline" href="#">Forgot?</a>
+                    </div>
+                    <input
+                        class="w-full bg-surface-container-lowest border border-error rounded-lg px-md py-sm font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200"
+                        id="password" type="password" value="password123" />
+                    <!-- Validation Error -->
+                    <p class="mt-xs font-label-sm text-label-sm text-error flex items-center gap-xs">
+                        <span class="material-symbols-outlined text-[16px]">error</span>
+                        Invalid password. Please try again.
+                    </p>
+                </div>
+                <!-- Login Button -->
+                <button
+                    class="w-full bg-primary-container text-on-primary font-label-md text-label-md py-md rounded-lg shadow-md hover:bg-on-secondary-fixed-variant transition-all duration-200 scale-95 active:scale-90 flex justify-center items-center gap-sm"
+                    type="submit">
+                    Login
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                </button>
+                <div class="relative my-lg">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-surface-variant"></div>
+                    </div>
+                    <div class="relative flex justify-center text-label-sm uppercase">
+                        <span class="bg-surface-container-lowest px-sm text-on-surface-variant">Or continue with</span>
+                    </div>
+                </div>
+                <!-- Google Login (Firebase Styled) -->
+                <button
+                    class="w-full border border-outline-variant bg-surface-container-lowest text-on-surface font-label-md text-label-md py-md rounded-lg hover:bg-surface-variant transition-all duration-200 flex justify-center items-center gap-md"
+                    type="button">
+                    <svg class="w-5 h-5" viewbox="0 0 24 24">
+                        <path
+                            d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                            fill="#4285F4"></path>
+                        <path
+                            d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                            fill="#34A853"></path>
+                        <path
+                            d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                            fill="#FBBC05"></path>
+                        <path
+                            d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                            fill="#EA4335"></path>
+                    </svg>
+                    Sign in with Google
+                </button>
+            </form>
+            <div class="mt-xl text-center">
+                <p class="font-body-md text-body-md text-on-surface-variant">
+                    Don't have an account?
+                    <a class="text-primary font-bold hover:underline" href="#">Sign Up</a>
+                </p>
+            </div>
+        </div>
+    </main>
+    <!-- Footer (Desktop 3-Column) -->
+    <footer class="bg-on-secondary-fixed-variant dark:bg-inverse-surface full-width bottom-0 text-on-primary">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-xl px-xl py-xl w-full max-w-container-max mx-auto">
+            <!-- Brand Section -->
+            <div class="flex flex-col gap-md">
+                <span class="font-headline-md text-headline-md text-on-primary">Travigo</span>
+                <p class="font-body-md text-body-md opacity-80 max-w-xs">Discover hidden gems, local flavors, and
+                    regional charm across the globe.</p>
+                <div class="flex gap-md">
+                    <span
+                        class="material-symbols-outlined cursor-pointer hover:text-secondary-fixed transition-colors">public</span>
+                    <span
+                        class="material-symbols-outlined cursor-pointer hover:text-secondary-fixed transition-colors">travel_explore</span>
+                    <span
+                        class="material-symbols-outlined cursor-pointer hover:text-secondary-fixed transition-colors">share</span>
+                </div>
+            </div>
+            <!-- Links Section -->
+            <div class="flex flex-col gap-sm">
+                <h4 class="font-label-md text-label-md mb-xs">Navigation</h4>
+                <a class="font-label-sm text-label-sm text-on-primary/70 hover:text-secondary-fixed transition-colors"
+                    href="index.html">Home</a>
+                <a class="font-label-sm text-label-sm text-on-primary/70 hover:text-secondary-fixed transition-colors"
+                    href="about.html">About Us</a>
+                <a class="font-label-sm text-label-sm text-on-primary/70 hover:text-secondary-fixed transition-colors"
+                    href="contact.html">Contact Us</a>
+                <a class="font-label-sm text-label-sm text-on-primary/70 hover:text-secondary-fixed transition-colors"
+                    href="liked_places.html">Liked Places</a>
+            </div>
+            <!-- Copyright & Legal -->
+            <div class="flex flex-col gap-sm">
+                <h4 class="font-label-md text-label-md mb-xs">Community</h4>
+                <p class="font-body-md text-body-md opacity-80 mb-sm">Join our community of over 10,000 local explorers.
+                </p>
+                <div class="flex flex-col gap-xs">
+                    <p class="font-label-sm text-label-sm text-on-primary/70">© 2024 Travigo. All rights reserved.
+                    </p>
+                    <div class="flex gap-md mt-xs">
+                        <a class="font-label-sm text-on-primary/50 hover:text-on-primary transition-colors"
+                            href="#">Privacy Policy</a>
+                        <a class="font-label-sm text-on-primary/50 hover:text-on-primary transition-colors"
+                            href="#">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Side Navigation Drawer (Preserved for Mobile) -->
+    <div class="fixed inset-0 z-50 translate-x-full transition-transform duration-300 ease-in-out md:hidden hidden"
+        id="nav-drawer">
+
+        <aside class="absolute right-0 top-0 h-full w-64 bg-surface-container-lowest shadow-md flex flex-col p-lg">
+            <div class="flex justify-between items-center mb-lg">
+                <span class="font-headline-md text-primary">Menu</span>
+                <button class="material-symbols-outlined p-2 hover:bg-surface-variant rounded-full"
+                    id="close-drawer">close</button>
+            </div>
+            <nav class="flex flex-col gap-md"><a
+                    class="flex items-center gap-md p-sm rounded-lg hover:bg-surface-variant text-on-surface font-label-md"
+                    href="index.html"><span class="material-symbols-outlined">home</span> Home</a><a
+                    class="flex items-center gap-md p-sm rounded-lg hover:bg-surface-variant text-on-surface font-label-md"
+                    href="about.html"><span class="material-symbols-outlined">info</span> About Us</a><a
+                    class="flex items-center gap-md p-sm rounded-lg hover:bg-surface-variant text-on-surface font-label-md"
+                    href="contact.html"><span class="material-symbols-outlined">mail</span> Contact Us</a><a
+                    class="flex items-center gap-md p-sm rounded-lg hover:bg-surface-variant text-on-surface font-label-md"
+                    href="liked_places.html"><span class="material-symbols-outlined">favorite</span> Favourites</a>
+                <div class="border-t border-outline-variant my-sm"></div><a
+                    class="flex items-center gap-md p-sm rounded-lg hover:bg-surface-variant text-on-surface font-label-md"
+                    href="profile.html"><span class="material-symbols-outlined">person</span> Profile</a><a
+                    class="flex items-center gap-md p-sm rounded-lg hover:bg-surface-variant text-primary font-label-md"
+                    href="login.html"><span class="material-symbols-outlined">login</span> Login</a>
+            </nav>
+        </aside>
+    </div>
+
+    <script id="navigation-root-scripts">// Page Specific Scripts
+
+        // Simple micro-interaction for button feedback
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.classList.add('scale-95');
+            });
+            button.addEventListener('mouseup', () => {
+                button.classList.remove('scale-95');
+            });
+        });
+
+
+        // Unified Navigation Drawer & Utilities
+
+        function toggleDrawer() {
+            const drawer = document.getElementById('nav-drawer');
+            const overlay = document.getElementById('drawer-overlay');
+            const body = document.body;
+
+            if (drawer.classList.contains('translate-x-full')) {
+                drawer.classList.remove('translate-x-full');
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                overlay.classList.add('opacity-100', 'pointer-events-auto');
+                body.style.overflow = 'hidden';
+            } else {
+                drawer.classList.add('translate-x-full');
+                overlay.classList.remove('opacity-100', 'pointer-events-auto');
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+                body.style.overflow = '';
+            }
+        }
+
+        // Scroll shrink header logic
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('top-app-bar');
+            const nav = header.querySelector('nav');
+            if (window.scrollY > 20) {
+                header.classList.add('bg-primary/95', 'backdrop-blur-md');
+                nav.classList.remove('py-md');
+                nav.classList.add('py-sm');
+            } else {
+                header.classList.remove('bg-primary/95', 'backdrop-blur-md');
+                nav.classList.remove('py-sm');
+                nav.classList.add('py-md');
+            }
+        });
+
+        // Set active link style based on current URL path
+        (function () {
+            let currentPath = window.location.pathname.split("/").pop();
+            if (!currentPath || currentPath === "/") {
+                currentPath = "index.html";
+            }
+
+            // Active desktop links
+            const desktopLinks = document.querySelectorAll('.desktop-nav-links a');
+            desktopLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('underline', 'decoration-2', 'underline-offset-8', 'font-bold');
+                }
+            });
+
+            // Active drawer links
+            const drawerLinks = document.querySelectorAll('#nav-drawer nav a');
+            drawerLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('bg-primary/10', 'text-primary');
+                }
+            });
+        })();
+    </script>
+</body>
+
+</html>
