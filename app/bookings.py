@@ -147,8 +147,10 @@ async def upload_upi_qr_scanner(
     contents = await file.read()
     with open(filepath, "wb") as f:
         f.write(contents)
+    
+    BASE_URL = os.getenv("BASE_URL", "http://localhost:8000")
 
-    qr_url = f"http://localhost:8000/static/uploads/{filename}"
+    qr_url = f"{BASE_URL}/static/uploads/{filename}"
 
     result = await db.execute(select(AppSettings).where(AppSettings.id == 1))
     s = result.scalars().first()
