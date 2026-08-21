@@ -156,7 +156,7 @@ async def seed_database(session: AsyncSession):
     settings_result = await session.execute(select(AppSettings).where(AppSettings.id == 1))
     app_settings = settings_result.scalars().first()
     if not app_settings:
-        session.add(AppSettings(id=1, upi_id="", upi_qr_url="", updated_at=datetime.utcnow()))
+        session.add(AppSettings(id=1, upi_id="", qr_image_base64=None, updated_at=datetime.utcnow()))
         await session.commit()
         logger.info("Created default app_settings row.")
 

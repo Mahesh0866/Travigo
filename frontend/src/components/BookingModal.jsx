@@ -541,7 +541,21 @@ export default function BookingModal({ pkg, onClose, onSuccess }) {
                   <div className="flex items-center justify-center h-64 bg-blue-50 rounded-2xl border-2 border-dashed border-blue-200">
                     <div className="text-center">
                       <span className="material-symbols-outlined text-[56px] text-blue-200 block mb-2">qr_code</span>
-                      <p className="text-sm text-blue-700 font-medium">UPI QR not configured</p>
+                      <div className="flex items-center justify-center gap-2">
+                        <p className="text-sm text-blue-700 font-medium">UPI QR not configured</p>
+                        <button
+                          onClick={() => {
+                            setUpiLoading(true);
+                            getUpiSettings()
+                              .then(setUpiSettings)
+                              .finally(() => setUpiLoading(false));
+                          }}
+                          className="text-blue-500 hover:text-blue-700 transition-colors flex items-center bg-white rounded-full p-1 shadow-sm"
+                          title="Refresh QR"
+                        >
+                          <span className="material-symbols-outlined text-[16px]">refresh</span>
+                        </button>
+                      </div>
                       <p className="text-xs text-blue-500 mt-1">Contact the Travel Officer for payment details.</p>
                     </div>
                   </div>

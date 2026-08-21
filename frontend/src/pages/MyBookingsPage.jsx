@@ -328,7 +328,18 @@ function BookingCard({ booking, upiSettings, onReload, onRefreshUpi }) {
                     ) : (
                       <div className="text-center py-6 text-blue-700 text-sm">
                         <span className="material-symbols-outlined text-[40px] text-blue-300 block mb-2">qr_code</span>
-                        UPI QR not configured. Please contact the travel officer.
+                        <div className="flex items-center justify-center gap-2">
+                          <p>UPI QR not configured. Please contact the travel officer.</p>
+                          <button
+                            onClick={() => {
+                              getUpiSettings().then(setUpiSettings).catch(() => {});
+                            }}
+                            className="text-blue-500 hover:text-blue-700 transition-colors flex items-center bg-white p-1 rounded-full shadow-sm"
+                            title="Refresh QR"
+                          >
+                            <span className="material-symbols-outlined text-[16px]">refresh</span>
+                          </button>
+                        </div>
                       </div>
                     )}
 
