@@ -42,7 +42,9 @@ import os
 from fastapi.staticfiles import StaticFiles
 
 # Ensure uploads directory exists for storing admin QR scanner images
-os.makedirs("uploads", exist_ok=True)
+import tempfile
+UPLOAD_DIR = tempfile.gettempdir() + "/uploads"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 app = FastAPI(
     title="Travigo Backend API",
