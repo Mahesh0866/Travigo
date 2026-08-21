@@ -42,8 +42,7 @@ import os
 from fastapi.staticfiles import StaticFiles
 
 # Ensure uploads directory exists for storing admin QR scanner images
-import tempfile
-UPLOAD_DIR = tempfile.gettempdir() + "/uploads"
+UPLOAD_DIR = os.path.abspath("uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 app = FastAPI(
