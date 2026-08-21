@@ -14,6 +14,7 @@ from app.admin_auth import router as admin_auth_router
 from app.activity import router as activity_router
 from app.scheduler import expire_pending_bookings
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Create tables (new tables will be created; existing tables unchanged)
@@ -55,9 +56,10 @@ app.mount("/static/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 # CORS configurations
 # Allowing React Vite dev server origin for API connection
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=[FRONTEND_URL, "http://localhost:5173", "http://127.0.0.1:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
