@@ -54,8 +54,7 @@ app = FastAPI(
 )
 
 # Serve uploaded static files (e.g. UPI QR Scanner images)
-app.mount("/static/uploads", StaticFiles(directory="uploads"), name="uploads")
-
+app.mount("/static/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
 # CORS configurations
 # Allowing React Vite dev server origin for API connection
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
