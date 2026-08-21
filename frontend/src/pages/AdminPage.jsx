@@ -916,7 +916,7 @@ function UsersTab() {
 // ─── Settings Tab ─────────────────────────────────────────────────────────────
 
 function SettingsTab() {
-  const [upi, setUpi] = useState({ upi_id: '', upi_qr_url: '' });
+  const [upi, setUpi] = useState({ upi_id: '', qr_image_base64: '' });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState('');
@@ -933,7 +933,7 @@ function SettingsTab() {
 
   useEffect(() => {
     getUpiSettings().then(s => {
-      setUpi({ upi_id: s.upi_id || '', upi_qr_url: s.upi_qr_url || '' });
+      setUpi({ upi_id: s.upi_id || '', qr_image_base64: s.qr_image_base64 || '' });
     }).finally(() => setLoading(false));
   }, []);
 
@@ -972,7 +972,7 @@ function SettingsTab() {
     setMsg('');
     try {
       const res = await adminUploadUpiQr(qrFile);
-      setUpi(u => ({ ...u, upi_qr_url: res.upi_qr_url }));
+      setUpi(u => ({ ...u, qr_image_base64: res.qr_image_base64 }));
       setQrFile(null);
       setQrPreview(null);
       setMsg('✅ UPI QR Scanner image uploaded and saved successfully!');
@@ -1061,17 +1061,17 @@ function SettingsTab() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Current UPI QR Image URL</label>
-          <input type="url" value={upi.upi_qr_url}
-            onChange={e => setUpi(u => ({ ...u, upi_qr_url: e.target.value }))}
-            placeholder="https://... or auto-filled upon upload"
+          <label className="block text-sm font-medium text-gray-700 mb-1">Current UPI QR Image Base64 Data URL (Read-only Preview)</label>
+          <input type="text" value={upi.qr_image_base64}
+            readOnly
+            placeholder="data:image/png;base64,... or auto-filled upon upload"
             className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-violet-400 bg-gray-50 font-mono text-xs" />
         </div>
 
-        {upi.upi_qr_url && (
+        {upi.qr_image_base64 && (
           <div className="border border-gray-100 rounded-xl p-4 bg-gray-50">
             <p className="text-xs text-gray-500 mb-2 font-medium">Active QR Scanner Preview (shown to users):</p>
-            <img src={upi.upi_qr_url} alt="UPI QR Preview"
+            <img src={upi.qr_image_base64} alt="UPI QR Preview"
               className="w-36 h-36 object-contain rounded-lg border bg-white p-2"
               onError={e => { e.target.style.display = 'none'; }} />
           </div>

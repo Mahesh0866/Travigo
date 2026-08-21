@@ -20,6 +20,7 @@ Admin (admin_jwt required):
 import logging
 import os
 import uuid
+import base64
 from datetime import datetime, timedelta
 from typing import Optional
 
@@ -89,8 +90,8 @@ async def get_upi_settings(db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(AppSettings).where(AppSettings.id == 1))
     s = result.scalars().first()
     if not s:
-        return {"id": 1, "upi_id": "", "upi_qr_url": "", "updated_at": None}
-    return {"id": s.id, "upi_id": s.upi_id, "upi_qr_url": s.upi_qr_url, "updated_at": s.updated_at}
+        return {"id": 1, "upi_id": "", "qr_image_base64": None, "updated_at": None}
+    return {"id": s.id, "upi_id": s.upi_id, "qr_image_base64": s.qr_image_base64, "updated_at": s.updated_at}
 
 
 @router.put("/admin/settings/upi")
@@ -104,21 +105,22 @@ async def update_upi_settings(
     s = result.scalars().first()
     now = datetime.utcnow()
     if not s:
-        s = AppSettings(id=1, upi_id=data.upi_id, upi_qr_url=data.upi_qr_url, updated_at=now)
+        s = AppSettings(id=1, upi_id=data.upi_id, qr_image_base64=data.qr_image_base64, updated_at=now)
         db.add(s)
     else:
         s.upi_id = data.upi_id
-        s.upi_qr_url = data.upi_qr_url
+        if data.qr_image_base64 is not None:
+            s.qr_image_base64 = data.qr_image_base64
         s.updated_at = now
     await log_activity(
         db, action=Actions.ADMIN_UPDATED_UPI,
         detail=f"Admin updated UPI settings: ID={data.upi_id}",
         actor_type="admin",
-        metadata={"upi_id": data.upi_id, "upi_qr_url": data.upi_qr_url},
+        metadata={"upi_id": data.upi_id},
     )
     await db.commit()
     await db.refresh(s)
-    return {"id": s.id, "upi_id": s.upi_id, "upi_qr_url": s.upi_qr_url, "updated_at": s.updated_at}
+    return {"id": s.id, "upi_id": s.upi_id, "qr_image_base64": s.qr_image_base64, "updated_at": s.updated_at}
 
 
 @router.post("/admin/settings/upi/upload-qr")
@@ -129,7 +131,7 @@ async def upload_upi_qr_scanner(
 ):
     """
     Admin: Upload/Update UPI QR Scanner Image (PNG, JPG, JPEG).
-    Saves file securely in uploads/ directory and updates upi_qr_url in database.
+    Saves file securely as a Base64-encoded string in the database.
     """
     allowed_exts = {".png", ".jpg", ".jpeg"}
     ext = os.path.splitext(file.filename)[1].lower() if file.filename else ""
@@ -140,40 +142,33 @@ async def upload_upi_qr_scanner(
             detail="Invalid file format. Please upload an image in PNG, JPG, or JPEG format."
         )
 
-    os.makedirs("uploads", exist_ok=True)
-    filename = f"upi_qr_{uuid.uuid4().hex[:8]}{ext or '.png'}"
-    filepath = os.path.join("uploads", filename)
-
     contents = await file.read()
-    with open(filepath, "wb") as f:
-        f.write(contents)
-    
-    BASE_URL = os.getenv("BASE_URL", "http://localhost:8000")
-
-    qr_url = f"{BASE_URL}/static/uploads/{filename}"
+    encoded_string = base64.b64encode(contents).decode("utf-8")
+    content_type = file.content_type or "image/png"
+    qr_data_url = f"data:{content_type};base64,{encoded_string}"
 
     result = await db.execute(select(AppSettings).where(AppSettings.id == 1))
     s = result.scalars().first()
     now = datetime.utcnow()
     if not s:
-        s = AppSettings(id=1, upi_id="", upi_qr_url=qr_url, updated_at=now)
+        s = AppSettings(id=1, upi_id="", qr_image_base64=qr_data_url, updated_at=now)
         db.add(s)
     else:
-        s.upi_qr_url = qr_url
+        s.qr_image_base64 = qr_data_url
         s.updated_at = now
 
     await log_activity(
         db, action=Actions.ADMIN_UPDATED_UPI,
-        detail=f"Admin uploaded new UPI QR scanner image: {filename}",
+        detail=f"Admin uploaded new UPI QR scanner image (base64)",
         actor_type="admin",
-        metadata={"filename": filename, "upi_qr_url": qr_url},
+        metadata={"filename": file.filename},
     )
     await db.commit()
     await db.refresh(s)
     return {
-        "message": "UPI QR Scanner image uploaded successfully",
+        "message": "UPI QR Scanner image uploaded and encoded successfully",
         "upi_id": s.upi_id,
-        "upi_qr_url": s.upi_qr_url,
+        "qr_image_base64": s.qr_image_base64,
         "updated_at": s.updated_at
     }
 

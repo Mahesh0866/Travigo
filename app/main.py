@@ -39,11 +39,6 @@ async def lifespan(app: FastAPI):
     await engine.dispose()
 
 import os
-from fastapi.staticfiles import StaticFiles
-
-# Ensure uploads directory exists for storing admin QR scanner images
-UPLOAD_DIR = os.path.abspath("uploads")
-os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 app = FastAPI(
     title="Travigo Backend API",
@@ -52,8 +47,6 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# Serve uploaded static files (e.g. UPI QR Scanner images)
-app.mount("/static/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
 # CORS configurations
 # Allowing React Vite dev server origin for API connection
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")

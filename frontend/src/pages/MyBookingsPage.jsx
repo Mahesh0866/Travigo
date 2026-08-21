@@ -8,7 +8,7 @@ export default function MyBookingsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [filter, setFilter] = useState('ALL');
-  const [upiSettings, setUpiSettings] = useState({ upi_id: '', upi_qr_url: '' });
+  const [upiSettings, setUpiSettings] = useState({ upi_id: '', qr_image_base64: '' });
 
   const isLoggedIn = !!localStorage.getItem('access_token');
 
@@ -302,12 +302,12 @@ function BookingCard({ booking, upiSettings, onReload, onRefreshUpi }) {
                       <p className="text-xs text-blue-600">Scan the QR code below using any UPI app (PhonePe, GPay, Paytm, etc.)</p>
                     </div>
 
-                    {upiSettings.upi_qr_url ? (
+                    {upiSettings.qr_image_base64 ? (
                       <div className="flex flex-col items-center gap-3">
                         {/* Large QR Scanner */}
                         <div className="bg-white p-3 rounded-2xl border-2 border-blue-200 shadow-md">
                           <img
-                            src={upiSettings.upi_qr_url}
+                            src={upiSettings.qr_image_base64}
                             alt="UPI QR Scanner"
                             className="w-52 h-52 object-contain"
                           />

@@ -197,12 +197,12 @@ class AdminPaymentAction(BaseModel):
 
 class AppSettingsUpdate(BaseModel):
     upi_id: str
-    upi_qr_url: str
+    qr_image_base64: Optional[str] = None
 
 class AppSettingsResponse(BaseModel):
     id: int
     upi_id: Optional[str]
-    upi_qr_url: Optional[str]
+    qr_image_base64: Optional[str] = None
     updated_at: Optional[datetime]
 
     class Config:

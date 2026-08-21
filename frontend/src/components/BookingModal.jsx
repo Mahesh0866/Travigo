@@ -18,7 +18,7 @@ export default function BookingModal({ pkg, onClose, onSuccess }) {
   });
   const [paymentMethod, setPaymentMethod] = useState(''); // 'CASH' | 'UPI'
   const [upiTxnId, setUpiTxnId] = useState('');
-  const [upiSettings, setUpiSettings] = useState({ upi_id: '', upi_qr_url: '' });
+  const [upiSettings, setUpiSettings] = useState({ upi_id: '', qr_image_base64: '' });
   const [upiLoading, setUpiLoading] = useState(false);
 
   // 5-minute countdown timer for UPI
@@ -501,12 +501,12 @@ export default function BookingModal({ pkg, onClose, onSuccess }) {
                       <p className="text-xs text-gray-400">Loading QR Scanner...</p>
                     </div>
                   </div>
-                ) : upiSettings.upi_qr_url ? (
+                ) : upiSettings.qr_image_base64 ? (
                   <div className="flex flex-col items-center gap-4">
                     {/* LARGE QR Code display */}
                     <div className="bg-white rounded-3xl border-4 border-blue-200 shadow-xl shadow-blue-100 p-4 inline-block">
                       <img
-                        src={upiSettings.upi_qr_url}
+                        src={upiSettings.qr_image_base64}
                         alt="UPI QR Scanner"
                         className="w-72 h-72 object-contain"
                         style={{ imageRendering: 'crisp-edges' }}

@@ -103,7 +103,7 @@ class AppSettings(Base):
     __tablename__ = "app_settings"
     id = Column(Integer, primary_key=True, index=True)
     upi_id = Column(String, nullable=True, default="")
-    upi_qr_url = Column(String, nullable=True, default="")
+    qr_image_base64 = Column(Text, nullable=True)
     updated_at = Column(DateTime, default=datetime.utcnow)
 
 # --- Admin Config (singleton row id=1) ---
