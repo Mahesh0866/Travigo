@@ -1,17 +1,84 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import apiClient from '../services/api';
 
+// ── Validation helpers ──────────────────────────────────────────
+const validateFullName = (v) => {
+  if (!v.trim()) return '';                       // empty = no error yet (untouched feel)
+  if (v.trim().length < 2) return 'Must be at least 2 characters.';
+  return '';
+};
+
+const validateEmail = (v) => {
+  if (!v.trim()) return '';
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())) return 'Enter a valid email address.';
+  return '';
+};
+
+const validateMobile = (v) => {
+  if (!v.trim()) return '';
+  if (/[^0-9]/.test(v)) return 'Only numeric digits are allowed.';
+  if (v.length < 10) return `Enter 10 digits (${v.length}/10).`;
+  if (v.length > 10) return 'Must be exactly 10 digits.';
+  return '';
+};
+
+const passwordRules = (v) => [
+  { label: 'At least 8 characters', pass: v.length >= 8 },
+  { label: '1 uppercase letter (A-Z)', pass: /[A-Z]/.test(v) },
+  { label: '1 lowercase letter (a-z)', pass: /[a-z]/.test(v) },
+  { label: '1 number (0-9)', pass: /[0-9]/.test(v) },
+  { label: '1 special character (@, #, $, %, !)', pass: /[^A-Za-z0-9]/.test(v) },
+];
+
+const validateConfirmPassword = (pw, cpw) => {
+  if (!cpw) return '';
+  if (pw !== cpw) return 'Passwords do not match.';
+  return '';
+};
+
+// ── Styled helpers ──────────────────────────────────────────────
+const inputBase =
+  'w-full bg-white border rounded-lg px-md py-sm font-body-md focus:outline-none focus:ring-2 transition-all';
+const inputOk = `${inputBase} border-outline-variant focus:ring-primary/20 focus:border-primary`;
+const inputErr = `${inputBase} border-red-400 focus:ring-red-200 focus:border-red-500`;
+
+const FieldError = ({ msg }) =>
+  msg ? (
+    <p className="mt-1 text-xs text-red-500 flex items-center gap-1">
+      <span className="material-symbols-outlined text-[14px]">error</span>
+      {msg}
+    </p>
+  ) : null;
+
+// ─────────────────────────────────────────────────────────────────
 export default function LoginPage() {
-  const [mode, setMode] = useState('login'); // 'login' | 'register'
+  const [mode, setMode] = useState('login');
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [mobile, setMobile] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  // Track whether user has started typing (to avoid showing errors on a blank form)
+  const [touched, setTouched] = useState({});
+  const touch = (field) => setTouched((t) => ({ ...t, [field]: true }));
+
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState('');
 
+  // ── Real-time per-field errors ────────────────────────────────
+  const nameErr = useMemo(() => (touched.fullName ? validateFullName(fullName) : ''), [fullName, touched.fullName]);
+  const emailErr = useMemo(() => (touched.email ? validateEmail(email) : ''), [email, touched.email]);
+  const mobileErr = useMemo(() => (touched.mobile ? validateMobile(mobile) : ''), [mobile, touched.mobile]);
+  const pwRules = useMemo(() => passwordRules(password), [password]);
+  const pwAllPass = pwRules.every((r) => r.pass);
+  const confirmErr = useMemo(
+    () => (touched.confirmPassword ? validateConfirmPassword(password, confirmPassword) : ''),
+    [password, confirmPassword, touched.confirmPassword],
+  );
+
+  // ── Submit ────────────────────────────────────────────────────
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -26,31 +93,19 @@ export default function LoginPage() {
         setError('Please enter a valid email address.');
         return;
       }
-    } else if (mode === 'register') {
+    } else {
+      // Touch everything so errors show
+      setTouched({ fullName: true, email: true, mobile: true, password: true, confirmPassword: true });
+
       if (!fullName.trim() || !email.trim() || !mobile.trim() || !password || !confirmPassword) {
         setError('All fields are required.');
         return;
       }
-      if (fullName.trim().length < 2) {
-        setError('Full name must be at least 2 characters.');
-        return;
-      }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-        setError('Please enter a valid email address.');
-        return;
-      }
-      if (!/^\+?[0-9]{10,15}$/.test(mobile.trim())) {
-        setError('Please enter a valid mobile number (10 to 15 digits).');
-        return;
-      }
-      if (password.length < 6) {
-        setError('Password must be at least 6 characters.');
-        return;
-      }
-      if (password !== confirmPassword) {
-        setError('Passwords do not match.');
-        return;
-      }
+      if (validateFullName(fullName)) { setError(validateFullName(fullName)); return; }
+      if (validateEmail(email)) { setError(validateEmail(email)); return; }
+      if (validateMobile(mobile)) { setError(validateMobile(mobile)); return; }
+      if (!pwAllPass) { setError('Password does not meet all requirements.'); return; }
+      if (password !== confirmPassword) { setError('Passwords do not match.'); return; }
     }
 
     setLoading(true);
@@ -67,7 +122,7 @@ export default function LoginPage() {
           password,
           confirm_password: confirmPassword,
           full_name: fullName.trim(),
-          mobile: mobile.trim()
+          mobile: mobile.trim(),
         });
         setSuccess('Account created! You can now log in.');
         setMode('login');
@@ -75,6 +130,7 @@ export default function LoginPage() {
         setMobile('');
         setPassword('');
         setConfirmPassword('');
+        setTouched({});
       }
     } catch (err) {
       let errMsg = 'Something went wrong. Please try again.';
@@ -100,6 +156,7 @@ export default function LoginPage() {
     setMobile('');
     setPassword('');
     setConfirmPassword('');
+    setTouched({});
   };
 
   return (
@@ -125,80 +182,87 @@ export default function LoginPage() {
           <button
             type="button"
             onClick={() => handleToggleMode('login')}
-            className={`flex-1 py-sm rounded-md font-label-md text-label-md transition-all ${
-              mode === 'login' ? 'bg-white text-primary shadow-sm font-bold' : 'text-on-surface-variant'
-            }`}
+            className={`flex-1 py-sm rounded-md font-label-md text-label-md transition-all ${mode === 'login' ? 'bg-white text-primary shadow-sm font-bold' : 'text-on-surface-variant'
+              }`}
           >
             Login
           </button>
           <button
             type="button"
             onClick={() => handleToggleMode('register')}
-            className={`flex-1 py-sm rounded-md font-label-md text-label-md transition-all ${
-              mode === 'register' ? 'bg-white text-primary shadow-sm font-bold' : 'text-on-surface-variant'
-            }`}
+            className={`flex-1 py-sm rounded-md font-label-md text-label-md transition-all ${mode === 'register' ? 'bg-white text-primary shadow-sm font-bold' : 'text-on-surface-variant'
+              }`}
           >
             Sign Up
           </button>
-          <a
-            href="/admin-login"
-            className="flex-1 py-sm rounded-md font-label-md text-label-md transition-all text-center bg-violet-50 text-violet-700 hover:bg-violet-100 flex items-center justify-center gap-xs font-bold border border-violet-200"
-          >
-            <span className="material-symbols-outlined text-[16px]">admin_panel_settings</span>
-            Admin
-          </a>
         </div>
 
         <form className="space-y-md" onSubmit={handleSubmit} noValidate>
+          {/* ── Full Name ───────────────────────── */}
           {mode === 'register' && (
             <div>
               <label className="block font-label-md text-label-md text-on-surface-variant mb-xs" htmlFor="fullName">
                 Full Name
               </label>
               <input
-                className="w-full bg-white border border-outline-variant rounded-lg px-md py-sm font-body-md focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                className={nameErr ? inputErr : inputOk}
                 id="fullName"
                 type="text"
                 placeholder="Alex Rivera"
                 value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
+                onChange={(e) => { setFullName(e.target.value); touch('fullName'); }}
+                onBlur={() => touch('fullName')}
                 required
               />
+              <FieldError msg={nameErr} />
             </div>
           )}
 
+          {/* ── Email ───────────────────────────── */}
           <div>
             <label className="block font-label-md text-label-md text-on-surface-variant mb-xs" htmlFor="email">
               Email Address
             </label>
             <input
-              className="w-full bg-white border border-outline-variant rounded-lg px-md py-sm font-body-md focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+              className={emailErr ? inputErr : inputOk}
               id="email"
               type="email"
               placeholder="alex@example.com"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => { setEmail(e.target.value); touch('email'); }}
+              onBlur={() => touch('email')}
               required
             />
+            <FieldError msg={emailErr} />
           </div>
 
+          {/* ── Mobile ──────────────────────────── */}
           {mode === 'register' && (
             <div>
               <label className="block font-label-md text-label-md text-on-surface-variant mb-xs" htmlFor="mobile">
                 Mobile Number
               </label>
               <input
-                className="w-full bg-white border border-outline-variant rounded-lg px-md py-sm font-body-md focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                className={mobileErr ? inputErr : inputOk}
                 id="mobile"
                 type="tel"
                 placeholder="9876543210"
+                maxLength={10}
                 value={mobile}
-                onChange={(e) => setMobile(e.target.value)}
+                onChange={(e) => {
+                  // Strip non-digits as user types
+                  const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
+                  setMobile(digits);
+                  touch('mobile');
+                }}
+                onBlur={() => touch('mobile')}
                 required
               />
+              <FieldError msg={mobileErr} />
             </div>
           )}
 
+          {/* ── Password ────────────────────────── */}
           <div>
             <div className="flex justify-between items-center mb-xs">
               <label className="block font-label-md text-label-md text-on-surface-variant" htmlFor="password">
@@ -209,33 +273,58 @@ export default function LoginPage() {
               )}
             </div>
             <input
-              className="w-full bg-white border border-outline-variant rounded-lg px-md py-sm font-body-md focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+              className={touched.password && !pwAllPass && mode === 'register' ? inputErr : inputOk}
               id="password"
               type="password"
               placeholder="Your password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => { setPassword(e.target.value); touch('password'); }}
+              onBlur={() => touch('password')}
               required
             />
+            {/* Live password checklist (register only) */}
+            {mode === 'register' && touched.password && password.length > 0 && (
+              <ul className="mt-2 space-y-0.5">
+                {pwRules.map((rule) => (
+                  <li key={rule.label} className={`text-xs flex items-center gap-1 ${rule.pass ? 'text-green-600' : 'text-red-500'}`}>
+                    <span className="material-symbols-outlined text-[14px]">
+                      {rule.pass ? 'check_circle' : 'cancel'}
+                    </span>
+                    {rule.label}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
+          {/* ── Confirm Password ─────────────────── */}
           {mode === 'register' && (
             <div>
               <label className="block font-label-md text-label-md text-on-surface-variant mb-xs" htmlFor="confirmPassword">
                 Confirm Password
               </label>
               <input
-                className="w-full bg-white border border-outline-variant rounded-lg px-md py-sm font-body-md focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                className={confirmErr ? inputErr : inputOk}
                 id="confirmPassword"
                 type="password"
                 placeholder="Repeat your password"
                 value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                onChange={(e) => { setConfirmPassword(e.target.value); touch('confirmPassword'); }}
+                onBlur={() => touch('confirmPassword')}
                 required
               />
+              <FieldError msg={confirmErr} />
+              {/* Green match indicator */}
+              {touched.confirmPassword && confirmPassword && !confirmErr && (
+                <p className="mt-1 text-xs text-green-600 flex items-center gap-1">
+                  <span className="material-symbols-outlined text-[14px]">check_circle</span>
+                  Passwords match
+                </p>
+              )}
             </div>
           )}
 
+          {/* ── Global form error (from server or submit-time checks) */}
           {error && (
             <p className="font-label-sm text-label-sm text-error flex items-center gap-xs">
               <span className="material-symbols-outlined text-[16px]">error</span>
@@ -264,18 +353,6 @@ export default function LoginPage() {
               </>
             )}
           </button>
-
-          {mode === 'login' && (
-            <div className="mt-lg pt-md border-t border-surface-variant text-center">
-              <a
-                href="/admin-login"
-                className="inline-flex items-center gap-xs text-label-md font-label-md text-violet-700 bg-violet-50 hover:bg-violet-100 border border-violet-200 px-md py-xs rounded-lg transition-all"
-              >
-                <span className="material-symbols-outlined text-[18px]">key</span>
-                Admin / Travel Officer 6-Digit Login
-              </a>
-            </div>
-          )}
         </form>
       </div>
     </main>

@@ -92,8 +92,8 @@ export default function BookingModal({ pkg, onClose, onSuccess }) {
     if (!form.traveler_name.trim() || form.traveler_name.trim().length < 2) {
       return 'Full name is required (at least 2 characters)';
     }
-    if (!/^\+?[0-9]{10,15}$/.test(form.traveler_mobile.trim())) {
-      return 'Valid mobile number (10 to 15 digits) required';
+    if (!/^[0-9]{10}$/.test(form.traveler_mobile.trim())) {
+      return 'Mobile number must contain exactly 10 numeric digits';
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.traveler_email.trim())) {
       return 'Valid email address required (e.g. name@example.com)';

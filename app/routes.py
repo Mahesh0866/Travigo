@@ -96,11 +96,22 @@ async def register(user_data: UserRegister, db: AsyncSession = Depends(get_db)):
             detail="Passwords do not match."
         )
     import re
-    if not re.match(r'^\+?[0-9]{10,15}$', user_data.mobile):
+    if not re.match(r'^[0-9]{10}$', user_data.mobile):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid mobile number. Must be 10 to 15 digits."
+            detail="Mobile number must contain exactly 10 numeric digits."
         )
+    pwd = user_data.password
+    if len(pwd) < 8:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Password must be at least 8 characters long.")
+    if not re.search(r'[A-Z]', pwd):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Password must contain at least 1 uppercase letter (A-Z).")
+    if not re.search(r'[a-z]', pwd):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Password must contain at least 1 lowercase letter (a-z).")
+    if not re.search(r'[0-9]', pwd):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Password must contain at least 1 number (0-9).")
+    if not re.search(r'[^A-Za-z0-9]', pwd):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Password must contain at least 1 special character (e.g. @, #, $, %, !).")
 
     result = await db.execute(select(User).where(User.email == user_data.email))
     existing_user = result.scalars().first()
@@ -193,9 +204,9 @@ async def update_me(
 
     if update_data.mobile is not None:
         mobile = update_data.mobile.strip()
-        if not re.match(r'^\+?[0-9]{10,15}$', mobile):
+        if not re.match(r'^[0-9]{10}$', mobile):
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                                detail="Invalid mobile number. Must be 10–15 digits.")
+                                detail="Mobile number must contain exactly 10 numeric digits.")
         current_user.mobile = mobile
 
     db.add(current_user)

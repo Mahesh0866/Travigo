@@ -40,13 +40,13 @@ export default function MyBookingsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-purple-50">
       {/* Header */}
-      <div className="bg-gradient-to-r from-violet-700 to-purple-700 py-14 px-6">
+      <div className="bg-primary dark:bg-primary-container py-14 px-6">
         <div className="max-w-4xl mx-auto">
-          <div className="flex items-center gap-3 text-white mb-2">
+          <div className="flex items-center gap-3 text-on-primary mb-2">
             <span className="material-symbols-outlined text-[28px]">receipt_long</span>
             <h1 className="text-3xl font-extrabold">My Bookings</h1>
           </div>
-          <p className="text-purple-200">Track your booking requests, admin approvals, and payment statuses.</p>
+          <p className="text-on-primary/80">Track your booking requests, admin approvals, and payment statuses.</p>
         </div>
       </div>
 

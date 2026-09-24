@@ -49,19 +49,8 @@ export default function Footer() {
             </div>
           </div>
           <div className="space-y-md">
-            <h4 className="text-on-primary font-bold font-label-md">Stay Connected</h4>
-            <div className="flex gap-md mb-xl">
-              <span className="material-symbols-outlined text-on-primary cursor-pointer hover:text-secondary-fixed transition-colors">
-                public
-              </span>
-              <span className="material-symbols-outlined text-on-primary cursor-pointer hover:text-secondary-fixed transition-colors">
-                mail
-              </span>
-              <span className="material-symbols-outlined text-on-primary cursor-pointer hover:text-secondary-fixed transition-colors">
-                share
-              </span>
-            </div>
             <p className="text-on-primary/70 font-label-sm text-label-sm">
+
               © 2024 Travigo. All rights reserved.
             </p>
           </div>

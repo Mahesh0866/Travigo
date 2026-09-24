@@ -1,6 +1,7 @@
-from pydantic import BaseModel, Field, EmailStr
+from pydantic import BaseModel, Field, EmailStr, field_validator
 from typing import List, Optional
 from datetime import datetime, date
+import re
 
 # --- Coordinates Model ---
 class Coordinates(BaseModel):
@@ -10,10 +11,32 @@ class Coordinates(BaseModel):
 # --- User Models ---
 class UserRegister(BaseModel):
     email: EmailStr
-    password: str = Field(..., min_length=6, description="Password must be at least 6 characters")
+    password: str = Field(..., min_length=8, description="Password must be at least 8 characters")
     confirm_password: str = Field(..., description="Confirm password")
     full_name: str = Field(..., min_length=2, description="Full name")
-    mobile: str = Field(..., min_length=10, max_length=15, description="Mobile number")
+    mobile: str = Field(..., min_length=10, max_length=10, description="Mobile number")
+
+    @field_validator('mobile')
+    @classmethod
+    def validate_mobile(cls, v: str) -> str:
+        if not v or not re.match(r'^[0-9]{10}$', v.strip()):
+            raise ValueError("Mobile number must contain exactly 10 numeric digits.")
+        return v.strip()
+
+    @field_validator('password')
+    @classmethod
+    def validate_password(cls, v: str) -> str:
+        if len(v) < 8:
+            raise ValueError("Password must be at least 8 characters long.")
+        if not re.search(r'[A-Z]', v):
+            raise ValueError("Password must contain at least 1 uppercase letter (A-Z).")
+        if not re.search(r'[a-z]', v):
+            raise ValueError("Password must contain at least 1 lowercase letter (a-z).")
+        if not re.search(r'[0-9]', v):
+            raise ValueError("Password must contain at least 1 number (0-9).")
+        if not re.search(r'[^A-Za-z0-9]', v):
+            raise ValueError("Password must contain at least 1 special character (e.g. @, #, $, %, !).")
+        return v
 
 class UserLogin(BaseModel):
     email: EmailStr
@@ -44,7 +67,17 @@ class UserProfile(BaseModel):
 class UserProfileUpdate(BaseModel):
     """Payload for PATCH /auth/me — all fields optional."""
     full_name: Optional[str] = Field(None, min_length=2, description="Full name")
-    mobile: Optional[str] = Field(None, min_length=10, max_length=15, description="Mobile number")
+    mobile: Optional[str] = Field(None, min_length=10, max_length=10, description="Mobile number")
+
+    @field_validator('mobile')
+    @classmethod
+    def validate_mobile(cls, v: Optional[str]) -> Optional[str]:
+        if v is not None:
+            v_stripped = v.strip()
+            if not re.match(r'^[0-9]{10}$', v_stripped):
+                raise ValueError("Mobile number must contain exactly 10 numeric digits.")
+            return v_stripped
+        return v
 
 # --- Token Models ---
 class Token(BaseModel):
@@ -152,13 +185,20 @@ class TravelPackageResponse(BaseModel):
 class BookingCreate(BaseModel):
     package_id: int
     traveler_name: str = Field(..., min_length=2)
-    traveler_mobile: str = Field(..., min_length=10, max_length=15)
+    traveler_mobile: str = Field(..., min_length=10, max_length=10)
     traveler_email: EmailStr
     num_travelers: int = Field(..., ge=1)
     travel_date: date
     # payment_method & upi_transaction_id are optional during initial request phase (pre-approval)
     payment_method: Optional[str] = None
     upi_transaction_id: Optional[str] = None
+
+    @field_validator('traveler_mobile')
+    @classmethod
+    def validate_mobile(cls, v: str) -> str:
+        if not v or not re.match(r'^[0-9]{10}$', v.strip()):
+            raise ValueError("Mobile number must contain exactly 10 numeric digits.")
+        return v.strip()
 
 class BookingPaymentSubmit(BaseModel):
     payment_method: str  # CASH | UPI

@@ -17,6 +17,7 @@ import PackagesPage from './pages/PackagesPage';
 import MyBookingsPage from './pages/MyBookingsPage';
 import AdminPage from './pages/AdminPage';
 import AdminLoginPage from './pages/AdminLoginPage';
+import LoginSelectionPage from './pages/LoginSelectionPage';
 
 const PAGE_SIZE = 8;
 
@@ -120,12 +121,13 @@ function App() {
   const path = window.location.pathname;
   const isLikedPage = path === '/liked';
   const isContactPage = path === '/contact';
-  const isLoginPage = path === '/login';
+  const isLoginSelectionPage = path === '/login';
+  const isUserLoginPage = path === '/user-login' || path === '/login/user';
   const isProfilePage = path === '/profile';
   const isPackagesPage = path === '/packages';
   const isMyBookings = path === '/my-bookings';
   const isAdminPage = path === '/admin';
-  const isAdminLoginPage = path === '/admin-login';
+  const isAdminLoginPage = path === '/admin-login' || path === '/admin/login';
 
   // Pages that should NOT show the main header/footer shell (admin is fullscreen)
   const isAdminRoute = isAdminPage || isAdminLoginPage;
@@ -133,7 +135,8 @@ function App() {
   const renderPage = () => {
     if (isLikedPage) return <LikedPlacesPage />;
     if (isContactPage) return <ContactPage />;
-    if (isLoginPage) return <LoginPage />;
+    if (isLoginSelectionPage) return <LoginSelectionPage />;
+    if (isUserLoginPage) return <LoginPage />;
     if (isProfilePage) return <ProfilePage />;
     if (isPackagesPage) return <PackagesPage />;
     if (isMyBookings) return <MyBookingsPage />;

@@ -186,6 +186,10 @@ async def create_booking(
     Status starts at PENDING_ADMIN_APPROVAL.
     Seats are NOT held until Admin approves the request.
     """
+    import re
+    if not re.match(r'^[0-9]{10}$', data.traveler_mobile.strip()):
+        raise HTTPException(status_code=400, detail="Mobile number must contain exactly 10 numeric digits.")
+
     # Validate package
     pkg_result = await db.execute(
         select(TravelPackage).where(TravelPackage.id == data.package_id)

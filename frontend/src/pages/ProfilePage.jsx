@@ -77,8 +77,8 @@ export default function ProfilePage() {
       setSaveError('Mobile number is required.');
       return;
     }
-    if (!/^\+?[0-9]{10,15}$/.test(trimmedMobile)) {
-      setSaveError('Enter a valid mobile number (10–15 digits).');
+    if (!/^[0-9]{10}$/.test(trimmedMobile)) {
+      setSaveError('Mobile number must contain exactly 10 numeric digits.');
       return;
     }
 

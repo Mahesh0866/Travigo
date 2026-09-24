@@ -65,7 +65,7 @@ export default function PackagesPage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-indigo-50">
 
       {/* ── Hero Banner ───────────────────────────────────── */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-violet-700 via-purple-700 to-indigo-700 py-20 px-6">
+      <div className="relative overflow-hidden bg-primary dark:bg-primary-container py-20 px-6">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0" style={{
             backgroundImage:
@@ -74,14 +74,14 @@ export default function PackagesPage() {
           }} />
         </div>
         <div className="max-w-5xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center gap-2 bg-white/10 text-white/90 px-4 py-1.5 rounded-full text-sm font-medium mb-4 backdrop-blur-sm">
+          <div className="inline-flex items-center gap-2 bg-on-primary/10 text-on-primary px-4 py-1.5 rounded-full text-sm font-medium mb-4 backdrop-blur-sm">
             <span className="material-symbols-outlined text-[16px]">flight_takeoff</span>
             Departing from Rajkot
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-on-primary mb-4 tracking-tight">
             Travel Packages
           </h1>
-          <p className="text-purple-200 text-lg max-w-xl mx-auto">
+          <p className="text-on-primary/80 text-lg max-w-xl mx-auto">
             Explore our curated travel experiences. Book your dream getaway with full
             itinerary and services included.
           </p>
